@@ -1,76 +1,65 @@
 import React, { Component } from "react";
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  ActivityIndicator,
-} from "react-native";
+import {View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      password: "",
+      pass: "",
       loggedIn: false,
       error: "",
     };
   }
 
   login() {
-    if (this.state.email == "" || this.state.password == "") {
+    if (this.state.email == "" || this.state.pass == "") {
       alert("Todos los campos son obligatorios.");
     } else if (!this.state.email.includes("@")) {
       alert("El formato de e-mail no es válido.");
     } else {
-      this.props.handleLogin(this.state.email, this.state.password);
+      this.props.handleLogin(this.state.email, this.state.pass);
     }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        {this.props.loader ? (
-          <ActivityIndicator size="large" color="blue" />
-        ) : (
           <>
             <View style={styles.header}>
               <Text style={styles.title}>
-                ¡Bienvenido de vuelta!
+                ¡Bienvenido!
               </Text>
             </View>
             <TextInput
               style={styles.field}
               keyboardType="email-address"
-              placeholder="E-mail"
+              placeholder="email"
               onChangeText={(text) => this.setState({ email: text })}
             />
             <TextInput
               style={styles.field}
               keyboardType="default"
-              placeholder="Contraseña"
+              placeholder="contraseña"
               secureTextEntry={true}
-              onChangeText={(text) => this.setState({ password: text })}
+              onChangeText={(text) => this.setState({ pass: text })}
             />
             <TouchableOpacity
               onPress={() => this.login()}
-              style={this.state.email == "" || this.state.password == ""
+              style={this.state.email == "" || this.state.pass == ""
                       ? styles.btnDisabled
                       : styles.btn
                     }
-              disabled={this.state.email == "" || this.state.password == ""
+              disabled={this.state.email == "" || this.state.pass == ""
                         ? true
                         : false
                       }>
-              <Text style={this.state.email == "" || this.state.password == ""
+              <Text style={this.state.email == "" || this.state.pass == ""
                       ? styles.btnText
                       : null
                     }> Ingresar </Text>
             </TouchableOpacity>
           </>
-        )}
       </View>
     );
   }
@@ -115,7 +104,7 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   header: {
-    backgroundColor: "#22223b",
+    backgroundColor: "#22233b",
     width: '100%',
     padding: 10,
   },
