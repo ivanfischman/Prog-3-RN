@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { auth, db } from '../firebase/config';
 import firebase from 'firebase';
 
@@ -37,26 +37,16 @@ class Post extends Component {
 			.catch((error) => console.log(error));
 	}
 
-	unLike() {
-        //Agregar el email del user logueado en el array
-		db
-        .collection('posts')
-        .doc(this.props.dataPost.id)
-        .update({
-            likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email),
-        })
-        .then(() =>
-            this.setState({
-                cantidadDeLikes: this.state.cantidadDeLikes - 1,
-                myLike: true,
-            })
-        )
-        .catch((error) => console.log(error));
-    }
+	unLike() {}
 
 	render() {
+        console.log(this.props.dataPost)
 		return (
 			<View style={styles.separator}>
+                <Image
+                    style={styles.image}
+                    source={{ uri: this.props.dataPost.data.url }}
+                />
 				<Text>Post de: {this.props.dataPost.data.owner}</Text>
 				<Text>Texto del Post: {this.props.dataPost.data.description}</Text>
 				<Text>Cantidad de likes: {this.state.cantidadDeLikes}</Text>
@@ -81,6 +71,11 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 		paddingHorizontal: 20,
 	},
+    image: {
+        width: "100%",
+        height: 200,
+        borderRadius: 12,
+      },
 });
 
 export default Post;
