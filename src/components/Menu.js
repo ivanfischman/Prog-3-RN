@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
+import Home from "../screens/Home"
 import { auth, db } from "../firebase/config";
 
 export default class Menu extends Component {
@@ -58,7 +59,6 @@ export default class Menu extends Component {
       })
       .catch((error) => {
         console.log(error);
-        alert("Error en el inicio de sesión.");
         this.setState({
           error: "Error en el inicio de sesión.",
         });
@@ -101,6 +101,19 @@ export default class Menu extends Component {
           showLabel: false,
         }}
       >
+        {this.state.loggedIn === true ? (
+            <>
+                <Drawer.Screen name="Home">
+                {(props) => (
+                    <Home
+                    {...props}
+                    loggedIn={this.state.loggedIn}
+                    loader={this.state.loader}
+                    />
+                )}
+                </Drawer.Screen>
+            </>
+        ) : (
           <>
             <Drawer.Screen name="Iniciar sesión">
             {(props) => (
@@ -124,6 +137,7 @@ export default class Menu extends Component {
               )}
             </Drawer.Screen>
           </>
+        )}
       </Drawer.Navigator>
     ); 
   } 
