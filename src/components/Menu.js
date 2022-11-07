@@ -1,144 +1,34 @@
-import React, { Component } from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Login from "../screens/Login";
-import Register from "../screens/Register";
-import Home from "../screens/Home"
-import { auth, db } from "../firebase/config";
+import Home from '../screens/Home';
+import Profile from '../screens/Profile';
+import NewPost from '../screens/NewPost';
 
-export default class Menu extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        loggedIn: false,
-        error: null,
-        loader: true,
-    };
-  }
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-  handleRegister(email, password, username) {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        console.log(response);
-        db.collection("users").add({
-          username: username,
-          createdAt: Date.now(),
-        });
-        alert("¡Usuario registrado!");
-        response.user.updateProfile({
-          displayName: username,
-        });
-        this.setState({
-          loggedIn: true,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        if (
-          error ==
-          "Error: The email address is already in use by another account."
-        ) {
-          alert("Este e-mail ya está registrado. Por favor, utilice otro.");
-        }
-        this.setState({
-          error: "Error en el registro.",
-        });
-      });
-  } //Register
+const Tab = createBottomTabNavigator();
+//lo creo como componente porque menu no es una vista, es un componente que nos va a permitir navegar entre vistas 
+//necesito que menu sea como padre de Home y y de perfil
+//indica que los componentes dentro van a tener navegacion tab 
+function Menu() {
+  return ( 
+      <Tab.Navigator>
+        
+          <Tab.Screen 
+            name="Home" 
+            component={Home} 
+           />
 
-  handleLogin(email, password) {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        console.log(response);
-        alert("Iniciaste sesión.");
-        this.setState({
-          loggedIn: true,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          error: "Error en el inicio de sesión.",
-        });
-      });
-  } //Login
+          <Tab.Screen  
+            name="Profile" 
+            component={Profile} />   
 
-  render() {
-    const Drawer = createBottomTabNavigator();
+            <Tab.Screen
+            name="NewPost"
+            component={NewPost}
+            /> 
+        
+      </Tab.Navigator>
+    
+  );
+}
 
-    return (
-      <Drawer.Navigator
-        initialRouteName="Login"
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            if (route.name === "Home") {
-              iconName = focused ? "home" : "home-outline";
-            } else if (route.name === "Publicar") {
-              iconName = focused ? "add-circle" : "add-circle-outline";
-            } else if (route.name === "Buscar") {
-              iconName = focused ? "search" : "search-outline";
-            } else if (route.name === "Mi perfil") {
-              iconName = focused ? "person" : "person-outline";
-            } else if (route.name === "Registrarme") {
-              iconName = focused ? "person-add" : "person-add-outline";
-            } else if (route.name === "Iniciar sesión") {
-              iconName = focused ? "log-in" : "log-in-outline";
-            }
-
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: "white",
-          tabBarInactiveTintColor: "gray",
-        })}
-        tabBarOptions={{
-          activeBackgroundColor: "#4a4e69",
-          inactiveBackgroundColor: "#22223b",
-          showLabel: false,
-        }}
-      >
-        {this.state.loggedIn === true ? (
-            <>
-                <Drawer.Screen name="Home">
-                {(props) => (
-                    <Home
-                    {...props}
-                    loggedIn={this.state.loggedIn}
-                    loader={this.state.loader}
-                    />
-                )}
-                </Drawer.Screen>
-            </>
-        ) : (
-          <>
-            <Drawer.Screen name="Iniciar sesión">
-            {(props) => (
-                <Login
-                  {...props}
-                  handleLogin={(email, password) =>
-                    this.handleLogin(email, password)
-                  }
-                  loader={this.state.loader}
-                />
-              )}
-            </Drawer.Screen>
-            <Drawer.Screen name="Registrarme">
-            {(props) => (
-                <Register
-                  {...props}
-                  handleRegister={(email, password, username) =>
-                    this.handleRegister(email, password, username)
-                  }
-                />
-              )}
-            </Drawer.Screen>
-          </>
-        )}
-      </Drawer.Navigator>
-    ); 
-  } 
-} 
+export default Menu;

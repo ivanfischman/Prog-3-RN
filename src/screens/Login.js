@@ -1,80 +1,49 @@
-import React, { Component } from "react";
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  ActivityIndicator,
-} from "react-native";
+import React, { Component } from 'react';
+import { View,
+         Text,
+         TextInput,
+         TouchableOpacity,
+        StyleSheet } from 'react-native';
 
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      loggedIn: false,
-      error: "",
-    };
-  }
 
-  login() {
-    if (this.state.email == "" || this.state.password == "") {
-      alert("Todos los campos son obligatorios.");
-    } else if (!this.state.email.includes("@")) {
-      alert("El formato de e-mail no es válido.");
-    } else {
-      this.props.handleLogin(this.state.email, this.state.password);
+class Login extends Component {
+    constructor(){
+        super()
+        this.state = {
+            email:'',
+            pass:'',
+            userName:'',
+            errors:''
+        }
     }
-  }
+    loginUser(email, pass) {
+		auth
+			.signInWithEmailAndPassword(email, pass)
+			.then((res) => {
+				this.props.navigation.navigate('Menu');
+			})
+			.catch((error) => console.log(error));
+	}
 
-  render() {
-    return (
-      <View style={styles.container}>
-        {this.props.loader ? (
-          <ActivityIndicator size="large" color="blue" />
-        ) : (
-          <>
-            <View style={styles.header}>
-              <Text style={styles.title}>
-                ¡Bienvenido de vuelta!
-              </Text>
-            </View>
-            <TextInput
-              style={styles.field}
-              keyboardType="email-address"
-              placeholder="E-mail"
-              onChangeText={(text) => this.setState({ email: text })}
-            />
-            <TextInput
-              style={styles.field}
-              keyboardType="default"
-              placeholder="Contraseña"
-              secureTextEntry={true}
-              onChangeText={(text) => this.setState({ password: text })}
-            />
-            <TouchableOpacity
-              onPress={() => this.login()}
-              style={this.state.email == "" || this.state.password == ""
-                      ? styles.btnDisabled
-                      : styles.btn
-                    }
-              disabled={this.state.email == "" || this.state.password == ""
-                        ? true
-                        : false
-                      }>
-              <Text style={this.state.email == "" || this.state.password == ""
-                      ? styles.btnText
-                      : null
-                    }> Ingresar </Text>
-            </TouchableOpacity>
-          </>
-        )}
-      </View>
-    );
-  }
+    render(){
+        return(
+            <View> 
+                <View>
+				<Text>Ingresar</Text>
+				<View>
+					<TextInput style={styles.field} placeholder="email" keyboardType="email-address" onChangeText={(text) => this.setState({ email: text })} value={this.state.email} />
+					<TextInput style={styles.field} placeholder="password" keyboardType="default" secureTextEntry onChangeText={(text) => this.setState({ pass: text })} value={this.state.pass} />
+					<Text onPress={() => this.loginUser(this.state.email, this.state.pass)}>Loguearme</Text>
+					<Text onPress={() => this.props.navigation.navigate('Register')}>No tengo cuenta</Text>
+				</View>
+			    </View>
+                </View>
+           
+        )
+    }
+
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -126,3 +95,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+export default Login;
