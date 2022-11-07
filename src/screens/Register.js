@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { db, auth } from '../firebase/config';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
+
 class Register extends Component { //usamos un componente de clase por el estado y porque vamos a tener metodos para registrar a los usuarios 
 	constructor(props) { //si hacemos un console log, vemos que al estar register dentro del NavigatoContainer va a recibir por props el objeto navigation  y lo que tenga dentro  
 		super(props);
@@ -24,7 +25,6 @@ class Register extends Component { //usamos un componente de clase por el estado
 //al registrar un usuario lo queremos guardar en db con nombre, biografia, etc
 //manda al servidor y si nos devuelve un success entra al then y sino al catch
 	registerUser(email, pass, nombreUsuario, miniBio) { 
-    
 		auth
 			.createUserWithEmailAndPassword(email, pass) 
 			.then((res) => {
@@ -35,17 +35,17 @@ class Register extends Component { //usamos un componente de clase por el estado
 					posteos: [],
           biografía: miniBio,
 				})
-      })
-      .then((res) =>{
         this.props.navigation.navigate('Login')
       })
+      
+  
 			.catch((error) => this.setState(
 				{errorMensaje: error.message}
 			))
       if(this.state.email == ""|| this.state.nombreUsuario == "" || this.state.pass == "" ){
         alert("complete los campos obligatorios ")} //DUDAAAA
 	}
-/* esto es porque recibe por props lo de navigate y eso  */
+/* esto es poyrque recibe por props lo de navigate y eso  */
 /* en el onchange, indicamos que lo que el usuario ingresa en el la parte del mail (text) lo ponemos en el estado de mail // value es lo que está en el input a la hora de escribir*/
 render() {
 	return (

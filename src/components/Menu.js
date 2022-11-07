@@ -1,5 +1,3 @@
-
-
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import NewPost from '../screens/NewPost';
@@ -33,5 +31,5 @@ function Menu() {
     
   );
 }
-
+//HOLA
 export default Menu;
