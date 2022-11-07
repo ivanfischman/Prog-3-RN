@@ -16,35 +16,35 @@ export default class NewPost extends Component {
             comments: [],
             showCamera: true, 
             url: ""
-
         }
     }
 
-guardarPost(){
-    console.log("guardar post")
-    db.collection("posts").add({
+    guardarPost(){
+        console.log("guardar post")
+        db.collection("posts").add({
+            owner: auth.currentUser.displayName,
             description: this.state.description,
+            createdAt: Date.now(),
             likes: [],
             comments: [],
             url: this.state.url
-    })
-    .then((res) =>{
-        console.log("posteo exitoso")
-        this.setState({
-            description: ""
-        }, ()=>this.props.navigation.navigate("Home") //como el set state puede no ser inmediato, indicamos como sefundo parametro donde queremos que nos dirija una vez realizado el seteo de estado 
-    )})
-    .catch(err => console.log(err))
-
-}
+        })
+        .then((res) =>{
+            console.log("posteo exitoso")
+            this.setState({
+                description: ""
+            }, ()=>this.props.navigation.navigate("Home") //como el set state puede no ser inmediato, indicamos como sefundo parametro donde queremos que nos dirija una vez realizado el seteo de estado 
+        )})
+        .catch(err => console.log(err))
+    }
  
- onImageUpload(url){
-    this.setState({
-        url,//como se llama igual que el parametro, y son lo mismo, no hace falta que aclare el valor de la propiedad
-        showCamera: false,
-        
-    })
- }
+    onImageUpload(url){
+        this.setState({
+            url,//como se llama igual que el parametro, y son lo mismo, no hace falta que aclare el valor de la propiedad
+            showCamera: false,
+            
+        })
+    }
  
  //lo de onimageupload  es lo que yo necesito para mostrar la camara 
     render() {
@@ -53,7 +53,7 @@ guardarPost(){
         {
             this.state.showCamera ? 
             <MyCamera style={styles.cameraBody}
-            onImageUpload = {url => this.onImageUpload(url) } 
+                onImageUpload = {url => this.onImageUpload(url) } 
             /> :
 
             <View>

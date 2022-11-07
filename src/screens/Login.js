@@ -6,7 +6,6 @@ import { View,
         StyleSheet } from 'react-native';
 import { auth } from '../firebase/config';
 
-
 class Login extends Component {
     constructor(){
         super()
@@ -37,8 +36,8 @@ class Login extends Component {
 					<Text onPress={() => this.loginUser(this.state.email, this.state.pass)}>Loguearme</Text>
 					<Text onPress={() => this.props.navigation.navigate('Register')}>No tengo cuenta</Text>
 				</View>
-			    </View>
-                </View>
+			</View>
+            </View>
            
         )
     }
