@@ -2,12 +2,12 @@ import app from "firebase/app";
 import firebase from "firebase"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDiAdnYZdtpDBI18tAwiuhO7mIYxtNbbaU",
-  authDomain: "udesa-gram-proyect.firebaseapp.com",
-  projectId: "udesa-gram-proyect",
-  storageBucket: "udesa-gram-proyect.appspot.com",
-  messagingSenderId: "531622669385",
-  appId: "1:531622669385:web:7369d5ac2ba5669fa1a398"
+  apiKey: "AIzaSyAJXQUqjsejpiGmKBvF8m6C8i4qpfpzsCA",
+  authDomain: "jm-gram.firebaseapp.com",
+  projectId: "jm-gram",
+  storageBucket: "jm-gram.appspot.com",
+  messagingSenderId: "549660828486",
+  appId: "1:549660828486:web:f1f0a22abaaa714c713b47"
 };
 
 // Initialize Firebase
