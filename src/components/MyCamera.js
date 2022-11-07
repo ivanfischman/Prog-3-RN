@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Camera} from "expo-camera"
-import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, Text, Image } from 'react-native';
 import { storage } from '../firebase/config';
 
 export default class MyCamera extends Component {
@@ -12,7 +12,7 @@ export default class MyCamera extends Component {
             uri:"",
     
         }
-        this.metodosDeCamara = ""
+        this.metodosDeCamara=""
      }
   
      componentDidMount(){
@@ -25,11 +25,14 @@ export default class MyCamera extends Component {
 
      tomarFoto(){
         console.log("tomar foto") //metodos de camara 
-        this.metodosDeCamara.takePicturesAsync()
-            .then(photo => this.setState({
-                uri: photo.uri, //esta es la respuesta de takepicturesasyn
-                showCamera: false//cuando saco la foto, ya dejo de mostrar la camara 
-            }))
+        this.metodosDeCamara.takePictureAsync()
+        
+            .then(photo => {
+                this.setState({
+                    uri: photo.uri, //esta es la respuesta de takepicturesasyn
+                    showCamera: false//cuando saco la foto, ya dejo de mostrar la camara 
+                })
+            })
             .catch (err => console.log(err))
 
      }
@@ -60,67 +63,65 @@ export default class MyCamera extends Component {
 /*  
     recibo un parametro metodos de camra y la arrow lo que hace es a los metodos que ya tengo agregarles los nuevos  */
     render() {
-    return (
-      <View>
-        {
-            this.state.permission ?
-            this.state.showCamera ?
-            <View>
-                <Camera
-                    style={styles.cameraBody}
-                    type={Camera.Constants.Type.back}
-                    ref={metodosDeCamara => this.metodosDeCamara = metodosDeCamara}/> 
-
-                <TouchableOpacity
-                    Style= {styles.button}
-                    onPress = {() => this.tomarFoto()}>
-                         <Text>Tomar foto</Text>
-                </TouchableOpacity>
-            </View>:
-            <View>
-                 
-        <Image
-            Style={styles.preview}
-            Source={{uri:this.state.uri}}
-            resizeMode="cover"/>
-        
-         <TouchableOpacity
-            style={styles.button}
-            onPress={()=> this.guardarFoto()}>
-        <Text>Guardar foto</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity
-            style={styles.button}
-            onPress={()=> this.clearFoto()}>
-         <Text>Borrar foto</Text>
-        </TouchableOpacity>
-            </View>:
-            <Text> No hay permisos para la camara  </Text>
-        }
-      </View>
-     
-      
-    )
+        return (
+            <View style={styles.cameraBody}>
+                {
+                    this.state.permission ? 
+                        this.state.showCamera ?
+                            <View style={styles.cameraBody}>
+                                <Camera 
+                                    style={styles.cameraBody}
+                                    type={Camera.Constants.Type.back}
+                                    ref= {(metodosDeCamara) => this.metodosDeCamara = metodosDeCamara} 
+                                />
+    
+                                <TouchableOpacity 
+                                    style={styles.button}
+                                    onPress = { ()=>this.tomarFoto()}
+                                >
+                                    <Text>Tomar Foto</Text>
+                                </TouchableOpacity>
+                            </View> :
+                            
+                            <View>
+                                <Image 
+                                    style={styles.preview}
+                                    source={{uri:this.state.uri}}
+                                    resizeMode='cover'
+                                />
+                                <TouchableOpacity 
+                                    style={styles.button}
+                                    onPress={()=>this.guardarFoto()}
+                                >
+                                    <Text>Guardar Foto</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity 
+                                    style={styles.button}
+                                    onPress={()=>this.clearFoto()}
+                                >
+                                    <Text>Eliminar</Text>
+                                </TouchableOpacity>
+                            </View> : 
+                            <Text>No Hay permisos para la camara</Text>
+                }
+            </View>
+        )
+      }
     }
-  }
-
-  
-   const styles = StyleSheet.create({
+    
+    const styles = StyleSheet.create({
         cameraBody: {
-            height: "88%"
+            height: '80%',
         },
         button:{
-            height:"28%",
-            borderColor: "#ccc",
+            height: '20%',
+            borderColor: '#ccc',
             borderWidth: 1,
             padding: 5,
             borderRadius: 4,
-            marginTop:20
+            marginTop: 20
         },
         preview:{
-            height: "88%"
+            height:'80%'
         }
-
-   })
-
+    }) 
