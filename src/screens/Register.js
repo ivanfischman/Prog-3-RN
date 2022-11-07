@@ -1,144 +1,86 @@
-import React, { Component } from "react";
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from "react-native";
-import { db } from "../firebase/config";
+import React, { Component } from 'react';
+import { db, auth } from '../firebase/config';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default class Register extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      username: "",
-      password: "",
-      checkPassword: "",
-      error: "",
-      users: [],
-    };
-  }
-
-  componentDidMount() {
-    db.collection("users").onSnapshot(
-      (docs) => {
-        let usersAux = [];
-        docs.forEach((doc) => {
-          usersAux.push(doc.data());
-        }); // For each
-        this.setState({
-          users: usersAux,
-        });
-      } // docs
-    ); //Snapshot
-    console.log(this.state.users);
-  }
-
-  validateUsername() {
-    let filteredUsers = this.state.users.filter((user) => {
-      return user.username == this.state.username;
-    });
-    if (filteredUsers.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  register() {
-    if (
-      this.state.email == "" ||
-      this.state.password == "" ||
-      this.state.username == ""
-    ) {
-      alert("Todos los campos son obligatorios.");
-    } else if (!this.state.email.includes("@")) {
-      alert("El formato de e-mail no es válido.");
-    } else if (this.validateUsername()) {
-      alert("Este nombre de usuario ya está en uso. Por favor, elija otro.");
-    } else if (this.state.password.length < 6) {
-      alert("La contraseña debe tener al menos 6 caracteres.");
-    } else if (this.state.password !== this.state.checkPassword) {
-      alert("Por favor, repita la misma contraseña.");
-    } else {
-      this.props.handleRegister(
-        this.state.email,
-        this.state.password,
-        this.state.username
-      );
-    }
-  } // Register
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>¿Primera vez por acá? ¡Registrate!</Text>
-        </View>
+class Register extends Component { //usamos un componente de clase por el estado y porque vamos a tener metodos para registrar a los usuarios 
+	constructor(props) { //si hacemos un console log, vemos que al estar register dentro del NavigatoContainer va a recibir por props el objeto navigation  y lo que tenga dentro  
+		super(props);
+		this.state = {
+			email: '',
+			pass: '',
+			nombreUsuario: "",
+			errorMensaje: "",
+      miniBio:"",
+      boton: true,
+		};
+	}
+	//NO CERRAR SESION - lo hacemos en register pq es lo primero que ve el usuario
+	componentDidMount(){ //como corre despues del primer renderizado, primero me carga el render 
+		auth.onAuthStateChanged((user) => {
+			if (user){
+				this.props.navigation.navigate("Menu")
+			}})//veo cual ususario tengo logueado y toda su info 
+	}
+//al registrar un usuario lo queremos guardar en db con nombre, biografia, etc
+//manda al servidor y si nos devuelve un success entra al then y sino al catch
+	registerUser(email, pass, nombreUsuario, miniBio) { 
+    
+		auth
+			.createUserWithEmailAndPassword(email, pass) 
+			.then((res) => {
+				db.collection("users")
+				.add({
+					email: email,
+					nombreUsuario: nombreUsuario ,
+					posteos: [],
+          biografía: miniBio,
+				})
+      })
+      .then((res) =>{
+        this.props.navigation.navigate('Login')
+      })
+			.catch((error) => this.setState(
+				{errorMensaje: error.message}
+			))
+      if(this.state.email == ""|| this.state.nombreUsuario == "" || this.state.pass == "" ){
+        alert("complete los campos obligatorios ")} //DUDAAAA
+	}
+/* esto es porque recibe por props lo de navigate y eso  */
+/* en el onchange, indicamos que lo que el usuario ingresa en el la parte del mail (text) lo ponemos en el estado de mail // value es lo que está en el input a la hora de escribir*/
+render() {
+	return (
+		<View Style={styles.container}>
+      <Text style={styles.titulo}>Registro</Text>
+			<View>
+				<TextInput style={styles.field} placeholder="email" keyboardType="email-address" onChangeText={(text) => this.setState({ email: text })} value={this.state.email} />
+				<TextInput
+					style={styles.field}
+					placeholder="Nombre de usuario"
+					keyboardType="default"
+					onChangeText={(text) => this.setState({ nombreUsuario: text })}
+					value={this.state.nombreUsuario}
+				/>
         <TextInput
-          style={styles.field}
-          keyboardType="email-address"
-          placeholder="E-mail"
-          onChangeText={(text) => this.setState({ email: text })}
-        />
-        <TextInput
-          style={styles.field}
-          keyboardType="default"
-          placeholder="Nombre de usuario"
-          onChangeText={(text) => this.setState({ username: text })}
-        />
-        <TextInput
-          style={styles.field}
-          keyboardType="default"
-          placeholder="Contraseña"
-          secureTextEntry={true}
-          onChangeText={(text) => this.setState({ password: text })}
-        />
-        <TextInput
-          style={styles.field}
-          keyboardType="default"
-          placeholder="Repetir contraseña"
-          secureTextEntry={true}
-          onChangeText={(text) => this.setState({ checkPassword: text })}
-        />
-        <TouchableOpacity
-          style={
-            this.state.email == "" ||
-            this.state.password == "" ||
-            this.state.username == "" ||
-            this.state.checkPassword == ""
-              ? styles.btnDisabled
-              : styles.btn
-          }
-          onPress={() => this.register()}
-          disabled={
-            this.state.email == "" ||
-            this.state.password == "" ||
-            this.state.username == "" ||
-            this.state.checkPassword == ""
-              ? true
-              : false
-          }
-        >
-          <Text
-            style={
-              this.state.email == "" ||
-              this.state.password == "" ||
-              this.state.username == "" ||
-              this.state.checkPassword == ""
-                ? styles.btnText
-                : null
-            }
-          >
-            {" "}
-            Registrarme{" "}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+					style={styles.field}
+					placeholder="Biografía"
+					keyboardType="default"
+					onChangeText={(text) => this.setState({miniBio: text })}
+					value={this.state.miniBio}
+				/>
+				<TextInput style={styles.field} placeholder="password" keyboardType="default" secureTextEntry onChangeText={(text) => this.setState({ pass: text })} value={this.state.pass} />
+				<TouchableOpacity
+        onPress={() => this.props.navigation.navigate('Login')}> <Text style={styles.texto}>Ya tengo cuenta </Text></TouchableOpacity>
+				<TouchableOpacity 
+        disabled = {this.state.email == "" || this.state.pass == "" || this.state.nombreUsuario == ""}
+         onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario, this.state.miniBio)}>
+					<Text style={styles.texto}>Registrarme</Text>
+				</TouchableOpacity>
+			</View>
+      <Text> {this.state.errorMensaje} </Text>
+		</View>
+	);
+}
+
 }
 
 const styles = StyleSheet.create({
@@ -148,12 +90,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#22223b",
-    color: "#ff9f68",
+    color: "grey",
     paddingTop: 20,
   },
   field: {
     width: "80%",
-    backgroundColor: "#C9ADA7",
+    backgroundColor: "green",
     textAlign: "center",
     padding: 7,
     marginTop: 5,
@@ -168,19 +110,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: "80%",
   },
-  btnDisabled: {
-    backgroundColor: "#e9c46a",
-    textAlign: "center",
-    padding: 7,
-    marginTop: 15,
-    borderRadius: 15,
-    width: "80%",
-  },
-  btnText: {
+  
+  texto: {
     color: "gray",
   },
-  header: {
-    backgroundColor: "#22223b",
+  titulo: {
+    textAlign: "center",
+    color: "white",
+    backgroundColor: "grey",
     width: "100%",
     padding: 10,
   },
@@ -192,3 +129,4 @@ const styles = StyleSheet.create({
   },
 });
 
+export default Register;
