@@ -13,7 +13,7 @@ class Login extends Component {
             email:'',
             pass:'',
             userName:'',
-            errors:''
+            errorMensaje:''
         }
     }
     loginUser(email, pass) {
@@ -22,7 +22,9 @@ class Login extends Component {
 			.then((res) => {
 				this.props.navigation.navigate('Menu');
 			})
-			.catch((error) => console.log(error));
+      .catch((error) => this.setState(
+				{errorMensaje: error.message}
+			))
 	}
 
     render(){
@@ -36,7 +38,8 @@ class Login extends Component {
 					<Text onPress={() => this.loginUser(this.state.email, this.state.pass)}>Loguearme</Text>
 					<Text onPress={() => this.props.navigation.navigate('Register')}>No tengo cuenta</Text>
 				</View>
-			</View>
+		  	</View>
+          <Text> {this.state.errorMensaje} </Text>
             </View>
            
         )
