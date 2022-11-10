@@ -22,7 +22,7 @@ export default class NewPost extends Component {
     guardarPost(){
         console.log("guardar post")
         db.collection("posts").add({
-            owner: auth.currentUser.displayName,
+            owner: auth.currentUser.email,
             description: this.state.description,
             createdAt: Date.now(),
             likes: [],
@@ -32,8 +32,9 @@ export default class NewPost extends Component {
         .then((res) =>{
             console.log("posteo exitoso")
             this.setState({
-                description: ""
-            }, ()=>this.props.navigation.navigate("Home") //como el set state puede no ser inmediato, indicamos como sefundo parametro donde queremos que nos dirija una vez realizado el seteo de estado 
+                description: "",
+                showCamera: true
+            }, ()=>this.props.navigation.navigate("Home") //como el set state puede no ser inmediato, indicamos como segundo parametro donde queremos que nos dirija una vez realizado el seteo de estado 
         )})
         .catch(err => console.log(err))
     }
@@ -42,7 +43,6 @@ export default class NewPost extends Component {
         this.setState({
             url,//como se llama igual que el parametro, y son lo mismo, no hace falta que aclare el valor de la propiedad
             showCamera: false,
-            
         })
     }
  
@@ -59,11 +59,12 @@ export default class NewPost extends Component {
             <View>
                 <Text style={styles.title}>Nuevo post</Text>
                 <TextInput
-                style = {styles.field}
-                keyboardType= "default"
-                placeholder='descripcion'
-                onChangeText={(text)=>this.setState({description:text })}
-                multiline/>
+                    style = {styles.field}
+                    keyboardType= "default"
+                    placeholder='descripcion'
+                    onChangeText={(text)=>this.setState({description:text })}
+                    multiline
+                />
                 <TouchableOpacity
                 style ={styles.buttonText}
                 onPress = {() => this.guardarPost()}>
