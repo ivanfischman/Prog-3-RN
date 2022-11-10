@@ -13,7 +13,7 @@ class Login extends Component {
             email:'',
             pass:'',
             userName:'',
-            errors:''
+            errorMensaje:''
         }
     }
     loginUser(email, pass) {
@@ -22,7 +22,9 @@ class Login extends Component {
 			.then((res) => {
 				this.props.navigation.navigate('Menu');
 			})
-			.catch((error) => console.log(error));
+      .catch((error) => this.setState(
+				{errorMensaje: error.message}
+			))
 	}
 
     render(){
@@ -39,13 +41,12 @@ class Login extends Component {
               <Text>Loguearme</Text>
           </TouchableOpacity>
 					<TouchableOpacity 
-            
             onPress={() => this.props.navigation.navigate('Register')}>
-              <Text> No tengo cuenta </Text>
-           
+              <Text> No tengo cuenta </Text>           
           </TouchableOpacity>
 				</View>
-			</View>
+		  	</View>
+          <Text> {this.state.errorMensaje} </Text>
             </View>
            
         )

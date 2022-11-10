@@ -95,8 +95,6 @@ export default class MyCamera extends Component {
           </>
         )}
       </View>
-     
-      
     )
     }
   }
