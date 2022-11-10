@@ -37,7 +37,9 @@ class Post extends Component {
 			.catch((error) => console.log(error));
 	}
 
-	unLike() {}
+    deletePost(id) {
+        db.collection("posts").doc(id).delete()
+    }
 
 	render() {
         console.log(this.props.dataPost)
@@ -59,6 +61,15 @@ class Post extends Component {
 						<Text>Like</Text>
 					</TouchableOpacity>
 				)}
+                {
+                    this.props.dataPost.data.owner == auth.currentUser.email ? (
+                    <TouchableOpacity onPress={() => this.deletePost(this.props.dataPost.id)}>
+						<Text>Borrar</Text>
+					</TouchableOpacity>
+                    ) : (
+                        null 
+                    )
+                }
 			</View>
 		);
 	}
