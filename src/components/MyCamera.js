@@ -42,7 +42,7 @@ export default class MyCamera extends Component {
         fetch(this.state.uri) 
             .then(res => res.blob())
             .then(image => {//aca voy a usar los metodos de storage - los importo desde la carpeta config donde los tengo importados 
-                const ref = storage.ref(`photo/${Date.now}.jpg`) //en qué directorio la voy a guardar, creo la referencia - fecha con now que es minutos, segundos y milisegundas 
+                const ref = storage.ref(`photo/${Date.now()}.jpg`) //en qué directorio la voy a guardar, creo la referencia - fecha con now que es minutos, segundos y milisegundas 
                 ref.put(image) //esto devuelve una promesa tmb - es como un callback hell  
                     .then(() => { 
                         ref.getDownloadURL()

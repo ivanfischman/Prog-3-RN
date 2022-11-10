@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-import { db } from '../firebase/config';
+import { db, auth } from '../firebase/config';
 import { ScrollView,
          Text,
-         TouchableOpacity, 
-         StyleSheet, 
-         ActivityIndicator,
          FlatList, 
-         Image } from 'react-native';
+         View } from 'react-native';
 import Post from './Post';
 
 class Home extends Component {
@@ -35,15 +32,21 @@ class Home extends Component {
         )
     }
 
+   
+
     render(){
         return(
                 <ScrollView>
+                    <View>
+                        <Text>
+                            ¡Hola {auth.currentUser.email}!
+                        </Text>
+                    </View>
                     <Text>Posteos</Text>
                     <FlatList 
                         data={this.state.posts}
                         keyExtractor={post => post.id}
-                        renderItem = { ({item}) => <Post dataPost={item} 
-                        {...this.props} />}
+                        renderItem = {({item}) => <Post dataPost={item} {...this.props} />}
                     />
                 </ScrollView>
         )
