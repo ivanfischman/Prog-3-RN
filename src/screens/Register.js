@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { db, auth } from '../firebase/config';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-
-
 class Register extends Component { //usamos un componente de clase por el estado y porque vamos a tener metodos para registrar a los usuarios 
 	constructor(props) { //si hacemos un console log, vemos que al estar register dentro del NavigatoContainer va a recibir por props el objeto navigation  y lo que tenga dentro  
 		super(props);
@@ -11,8 +9,8 @@ class Register extends Component { //usamos un componente de clase por el estado
 			pass: '',
 			nombreUsuario: "",
 			errorMensaje: "",
-      miniBio:"",
-      boton: true,
+            miniBio:"",
+            boton: true,
 		};
 	}
 	//NO CERRAR SESION - lo hacemos en register pq es lo primero que ve el usuario
@@ -20,7 +18,7 @@ class Register extends Component { //usamos un componente de clase por el estado
 		auth.onAuthStateChanged((user) => {
 			if (user){
 				this.props.navigation.navigate("Menu")
-			}})//veo cual ususario tengo logueado y toda su info 
+			}}) //veo cual ususario tengo logueado y toda su info 
 	}
 //al registrar un usuario lo queremos guardar en db con nombre, biografia, etc
 //manda al servidor y si nos devuelve un success entra al then y sino al catch
@@ -31,19 +29,15 @@ class Register extends Component { //usamos un componente de clase por el estado
 				db.collection("users")
 				.add({
 					email: email,
-					nombreUsuario: nombreUsuario ,
+					nombreUsuario: nombreUsuario,
 					posteos: [],
-          biografía: miniBio,
+                    biografía: miniBio,
 				})
-        this.props.navigation.navigate('Login')
-      })
-      
-  
+            this.props.navigation.navigate('Login')
+        })
 			.catch((error) => this.setState(
 				{errorMensaje: error.message}
 			))
-      if(this.state.email == ""|| this.state.nombreUsuario == "" || this.state.pass == "" ){
-        alert("complete los campos obligatorios ")} //DUDAAAA
 	}
 /* esto es poyrque recibe por props lo de navigate y eso  */
 /* en el onchange, indicamos que lo que el usuario ingresa en el la parte del mail (text) lo ponemos en el estado de mail // value es lo que está en el input a la hora de escribir*/
@@ -60,20 +54,20 @@ render() {
 					onChangeText={(text) => this.setState({ nombreUsuario: text })}
 					value={this.state.nombreUsuario}
 				/>
-        <TextInput
+                <TextInput
 					style={styles.field}
 					placeholder="Biografía"
 					keyboardType="default"
 					onChangeText={(text) => this.setState({miniBio: text })}
 					value={this.state.miniBio}
 				/>
-				<TextInput style={styles.field} placeholder="password" keyboardType="default" secureTextEntry onChangeText={(text) => this.setState({ pass: text })} value={this.state.pass} />
+				<TextInput style={styles.field} placeholder="password" keyboardType="default"   secureTextEntry onChangeText={(text) => this.setState({ pass: text })} value={this.state.pass} />
 				<TouchableOpacity
-        onPress={() => this.props.navigation.navigate('Login')}> <Text style={styles.texto}>Ya tengo cuenta </Text></TouchableOpacity>
+                    onPress={() => this.props.navigation.navigate('Login')}> <Text style={styles.texto}>Ya tengo cuenta </Text></TouchableOpacity>
 				<TouchableOpacity 
-        disabled = {this.state.email == "" || this.state.pass == "" || this.state.nombreUsuario == ""}
-         onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario, this.state.miniBio)}>
-					<Text style={styles.texto}>Registrarme</Text>
+                    disabled = {this.state.email == "" || this.state.pass == "" || this.state.nombreUsuario == ""}
+                    onPress = {() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario, this.state.miniBio)}>
+				<Text style={styles.texto}>Registrarme</Text>
 				</TouchableOpacity>
 			</View>
       <Text> {this.state.errorMensaje} </Text>

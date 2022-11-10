@@ -3,8 +3,6 @@ import {View, Text, TextInput, TouchableOpacity, Image, StyleSheet} from "react-
 import { auth, db } from '../firebase/config'
 import MyCamera from '../components/MyCamera'
 
-
-
 export default class NewPost extends Component {
     constructor(props){
         super(props)

@@ -11,7 +11,6 @@ const Tab = createBottomTabNavigator();
 function Menu() {
   return ( 
       <Tab.Navigator>
-        
           <Tab.Screen 
             name="Home" 
             component={Home} 
@@ -25,7 +24,6 @@ function Menu() {
             name="NewPost"
             component={NewPost}
             /> 
-        
       </Tab.Navigator>
     
   );
