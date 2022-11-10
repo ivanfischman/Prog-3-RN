@@ -35,8 +35,15 @@ class Login extends Component {
 				<View>
 					<TextInput style={styles.field} placeholder="email" keyboardType="email-address" onChangeText={(text) => this.setState({ email: text })} value={this.state.email} />
 					<TextInput style={styles.field} placeholder="password" keyboardType="default" secureTextEntry onChangeText={(text) => this.setState({ pass: text })} value={this.state.pass} />
-					<Text onPress={() => this.loginUser(this.state.email, this.state.pass)}>Loguearme</Text>
-					<Text onPress={() => this.props.navigation.navigate('Register')}>No tengo cuenta</Text>
+					<TouchableOpacity
+            onPress={() => this.loginUser(this.state.email, this.state.pass)}
+            disabled = {this.state.email == "" || this.state.pass == "" || this.state.nombreUsuario == ""}>
+              <Text>Loguearme</Text>
+          </TouchableOpacity>
+					<TouchableOpacity 
+            onPress={() => this.props.navigation.navigate('Register')}>
+              <Text> No tengo cuenta </Text>           
+          </TouchableOpacity>
 				</View>
 		  	</View>
           <Text> {this.state.errorMensaje} </Text>
