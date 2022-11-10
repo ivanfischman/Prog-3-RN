@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { db } from '../firebase/config';
-import { View,
+import { ScrollView,
          Text,
          TouchableOpacity, 
          StyleSheet, 
@@ -37,7 +37,7 @@ class Home extends Component {
 
     render(){
         return(
-                <View>
+                <ScrollView>
                     <Text>Posteos</Text>
                     <FlatList 
                         data={this.state.posts}
@@ -45,7 +45,7 @@ class Home extends Component {
                         renderItem = { ({item}) => <Post dataPost={item} 
                         {...this.props} />}
                     />
-                </View>
+                </ScrollView>
         )
     }
 }

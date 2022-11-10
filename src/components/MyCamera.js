@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Camera} from "expo-camera"
-import { TouchableOpacity, View, StyleSheet, Image} from 'react-native';
+import { TouchableOpacity, View, StyleSheet, Text, Image } from 'react-native';
 import { storage } from '../firebase/config';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -12,7 +12,7 @@ export default class MyCamera extends Component {
             showCamera: true,
             uri:"",
         }
-        this.metodosDeCamara = ""
+        this.metodosDeCamara=""
      }
   
      componentDidMount(){
@@ -26,10 +26,13 @@ export default class MyCamera extends Component {
      tomarFoto(){
         console.log("tomar foto") //metodos de camara 
         this.metodosDeCamara.takePictureAsync()
-            .then(photo => this.setState({
-                uri: photo.uri, //esta es la respuesta de takepicturesasyn
-                showCamera: false//cuando saco la foto, ya dejo de mostrar la camara 
-            }))
+        
+            .then(photo => {
+                this.setState({
+                    uri: photo.uri, //esta es la respuesta de takepicturesasyn
+                    showCamera: false//cuando saco la foto, ya dejo de mostrar la camara 
+                })
+            })
             .catch (err => console.log(err))
 
      }

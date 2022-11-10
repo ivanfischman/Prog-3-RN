@@ -65,9 +65,9 @@ render() {
 				<TouchableOpacity
                     onPress={() => this.props.navigation.navigate('Login')}> <Text style={styles.texto}>Ya tengo cuenta </Text></TouchableOpacity>
 				<TouchableOpacity 
-                    disabled = {this.state.email == "" || this.state.pass == "" || this.state.nombreUsuario == ""}
-                    onPress = {() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario, this.state.miniBio)}>
-				<Text style={styles.texto}>Registrarme</Text>
+          disabled = {this.state.email == "" || this.state.pass == "" || this.state.nombreUsuario == ""}
+          onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario, this.state.miniBio)}>
+					<Text style={styles.texto}>Registrarme</Text>
 				</TouchableOpacity>
 			</View>
       <Text> {this.state.errorMensaje} </Text>
