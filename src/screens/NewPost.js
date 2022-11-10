@@ -7,7 +7,7 @@ export default class NewPost extends Component {
     constructor(props){
         super(props)
         this.state = { //todo lo que voy a querer en mi posteo
-            createdAt: Date.now,
+            createdAt: Date.now(),
             owner: auth.currentUser.email,
             description: "",
             likes: [],
