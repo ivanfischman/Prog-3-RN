@@ -71,10 +71,10 @@ export default class MyCamera extends Component {
             <Image style={styles.preview} source={{ uri: this.state.uri }} />
             <View style={styles.uploadImage}>
               <TouchableOpacity onPress={() => this.guardarFoto()}>
-                <Ionicons name="checkmark-circle-outline" size="50px" color="green"/>
+                <Ionicons name="checkmark-circle-outline" size="50px" color="white"/>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => this.clearFoto()}>
-                <Ionicons name="close-circle-outline" size="50px" color="red"/>
+                <Ionicons name="close-circle-outline" size="50px" color="white"/>
               </TouchableOpacity>
             </View>
           </>
@@ -87,7 +87,7 @@ export default class MyCamera extends Component {
             />
             <TouchableOpacity style={styles.uploadImage} onPress={() => this.tomarFoto()}>
               <Ionicons
-                name="aperture-outline"
+                name="camera"
                 size="50px"
                 color="white"
               />
