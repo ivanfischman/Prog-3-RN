@@ -37,6 +37,22 @@ class Post extends Component {
 			.catch((error) => console.log(error));
 	}
 
+    unLike() {
+        db
+			.collection('posts')
+			.doc(this.props.dataPost.id)
+			.update({
+				likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email),
+			})
+			.then(() =>
+				this.setState({
+					cantidadDeLikes: this.state.cantidadDeLikes - 1,
+					myLike: false,
+				})
+			)
+			.catch((error) => console.log(error));
+    }
+
     deletePost(id) {
         db.collection("posts").doc(id).delete()
     }
@@ -70,6 +86,10 @@ class Post extends Component {
                         null 
                     )
                 }
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("Comments", {id: this.props.dataPost.id})}> 
+                    <Text>Comments</Text>
+				</TouchableOpacity>
 			</View>
 		);
 	}

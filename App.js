@@ -1,6 +1,7 @@
 import Register from './src/screens/Register';
 import Login from './src/screens/Login';
 import Menu from './src/components/Menu';
+import Comments from './src/screens/Comments'
 
 import { NavigationContainer } from '@react-navigation/native'; //contenedor general 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -20,6 +21,12 @@ export default function App() {
 				<Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
 
 				<Stack.Screen options={{ headerShown: false }} name="Menu" component={Menu} />
+
+                <Stack.Screen
+                    options={{ headerShown : true }}
+                    name="Comments"
+                    component={Comments}
+                /> 
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

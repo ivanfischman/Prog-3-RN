@@ -36,11 +36,11 @@ class Login extends Component {
 					<TextInput style={styles.field} placeholder="email" keyboardType="email-address" onChangeText={(text) => this.setState({ email: text })} value={this.state.email} />
 					<TextInput style={styles.field} placeholder="password" keyboardType="default" secureTextEntry onChangeText={(text) => this.setState({ pass: text })} value={this.state.pass} />
 					<TouchableOpacity
-            onPress={() => this.loginUser(this.state.email, this.state.pass)}
-            disabled = {this.state.email == "" || this.state.pass == "" || this.state.nombreUsuario == ""}>
-              <Text>Loguearme</Text>
-          </TouchableOpacity>
-					<TouchableOpacity 
+                        onPress={() => this.loginUser(this.state.email, this.state.pass)}
+                        disabled = {this.state.email == "" || this.state.pass == ""}>
+                        <Text>Loguearme</Text>
+                    </TouchableOpacity>
+		  <TouchableOpacity 
             onPress={() => this.props.navigation.navigate('Register')}>
               <Text> No tengo cuenta </Text>           
           </TouchableOpacity>
@@ -53,7 +53,6 @@ class Login extends Component {
     }
 
 }
-
 
 const styles = StyleSheet.create({
   container: {
