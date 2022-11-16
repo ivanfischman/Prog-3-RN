@@ -12,23 +12,31 @@ const Tab = createBottomTabNavigator();
 function Menu() {
   return ( 
       <Tab.Navigator>
-          <Tab.Screen 
+        <Tab.Screen 
+            options={{ headerShown : false }}
             name="Home" 
             component={Home} 
-           />
+        />
 
-          <Tab.Screen  
+        <Tab.Screen
+            options={{ headerShown : false }}
             name="Profile" 
-            component={Profile} />   
+            component={Profile} 
+        />   
 
-            <Tab.Screen
+        <Tab.Screen
+            options={{ headerShown : false }}
             name="NewPost"
             component={NewPost}
+<<<<<<< HEAD
             /> 
 
             <Tab.Screen 
             name="Buscador"
             component= {Buscador}/>
+=======
+        /> 
+>>>>>>> 2c26d448a52d011670bc66a0295890857a33337f
       </Tab.Navigator>
     
   );
