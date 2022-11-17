@@ -87,7 +87,7 @@ export default class Profile extends Component {
                   style={styles.btn}
                   onPress={() => this.addPostRedirect()}
                 >
-                  <Text>¡Creá tu primer posteo!</Text>
+                  <Text>¡Creá tu primera publicación!</Text>
                 </TouchableOpacity>
               </View>
             )}
