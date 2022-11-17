@@ -9,7 +9,9 @@ export default class Buscador extends Component {
         this.state = {
             busqueda: "",
             resultado: [],
-            users: ""
+            users: "",
+            error: "",
+            
             
         }
       
@@ -37,10 +39,21 @@ buscador(){
           return  user.data.nombreUsuario.includes(this.state.busqueda)}
         )
             this.setState({
-                resultado: nuevoArray
+                resultado: nuevoArray,
+            
             }, () => console.log(this.state.resultado))
-
-    }
+    
+            if(this.state.resultado.length== 0) {
+            this.setState({
+            error: "No existen coincidencias para este usuario"
+            })
+            }   
+    } else if(this.state.busqueda.length == 0) {
+        this.setState({
+            error: "Este campo no puede estar vacío"
+        })
+    } 
+      
 }
 
 render() {
@@ -54,7 +67,7 @@ render() {
             renderItem = { ({item}) => <SearchResults dataUser={item} 
             {...this.props} />}>
             </FlatList>
-        </View> : ""
+        </View> : <Text>{this.state.error}</Text>
         }
           <View>
             

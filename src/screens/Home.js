@@ -42,13 +42,8 @@ class Home extends Component {
                     <FlatList 
                         data={this.state.posts}
                         keyExtractor={post => post.id}
-<<<<<<< HEAD
-                        renderItem = { ({item}) => <Post dataPost={item} 
-                        {...this.props} />}
-=======
                         /* necesitamos el ...this.props porque necesitamos pasarle el objeto de navegacion (navegation y route) */
                         renderItem = {({item}) => <Post dataPost={item} {...this.props} />}
->>>>>>> 2c26d448a52d011670bc66a0295890857a33337f
                     />
                 </ScrollView>
         )

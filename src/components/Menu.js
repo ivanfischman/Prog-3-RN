@@ -28,15 +28,11 @@ function Menu() {
             options={{ headerShown : false }}
             name="NewPost"
             component={NewPost}
-<<<<<<< HEAD
             /> 
 
             <Tab.Screen 
             name="Buscador"
             component= {Buscador}/>
-=======
-        /> 
->>>>>>> 2c26d448a52d011670bc66a0295890857a33337f
       </Tab.Navigator>
     
   );
