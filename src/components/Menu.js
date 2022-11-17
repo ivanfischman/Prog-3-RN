@@ -2,6 +2,9 @@ import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import NewPost from '../screens/NewPost';
 import Buscador from '../screens/Buscador';
+import { AntDesign } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons'; 
+
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -15,23 +18,35 @@ function Menu() {
         <Tab.Screen 
             options={{ headerShown : false }}
             name="Home" 
+            options ={
+                { tabBarIcon: () =><Entypo name="home" size={24} color="black" />}
+            }
             component={Home} 
         />
 
         <Tab.Screen
             options={{ headerShown : false }}
             name="Profile" 
+            options ={
+                { tabBarIcon: () =><AntDesign name="user" size={24} color="black" />}
+            }
             component={Profile} 
         />   
 
         <Tab.Screen
             options={{ headerShown : false }}
             name="NewPost"
+            options ={
+                { tabBarIcon: () =><Entypo name="camera" size={24} color="black" />}
+            }
             component={NewPost}
             /> 
 
             <Tab.Screen 
             name="Buscador"
+            options={
+                { tabBarIcon: () =><AntDesign name="search1" size={24} color="black" />}
+            }
             component= {Buscador}/>
       </Tab.Navigator>
     
