@@ -2,6 +2,7 @@ import Register from './src/screens/Register';
 import Login from './src/screens/Login';
 import Menu from './src/components/Menu';
 import Comments from './src/screens/Comments'
+import UserProfile from './src/screens/UserProfile';
 
 import { NavigationContainer } from '@react-navigation/native'; //contenedor general 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -27,6 +28,12 @@ export default function App() {
                     name="Comments"
                     component={Comments}
                 /> 
+
+				<Stack.Screen
+					options={{ headerShown : true }}
+					name="UserProfile"
+					component={UserProfile}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

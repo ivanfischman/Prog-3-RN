@@ -31,7 +31,7 @@ class Register extends Component { //usamos un componente de clase por el estado
 					email: email,
 					nombreUsuario: nombreUsuario,
 					posteos: [],
-                    biografía: miniBio,
+                    biografia: miniBio,
 				})
             this.props.navigation.navigate('Login')
         })
