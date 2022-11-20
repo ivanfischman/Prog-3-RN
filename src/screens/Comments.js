@@ -52,11 +52,13 @@ export default class Comments extends Component {
     }
 
   render() {
-    console.log(this.props.route.params.id)
-
     return (
       <>
-        <Text> COMMENTS </Text>
+        <View style={styles.header}>
+            <Text style={styles.text}>
+                Comentarios
+            </Text>
+        </View>
         {this.state.comment.length != 0 ? (
         <FlatList
             data={this.state.comment}
@@ -98,6 +100,17 @@ export default class Comments extends Component {
 }
 
 const styles = StyleSheet.create({
+    text: {
+        color: "white",
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: '600',
+      },
+    header: {
+        backgroundColor: "#22223b",
+        width: '100%',
+        padding: 10,
+      },
     inline: {
       flexWrap: "wrap",
       alignItems: "center",

@@ -2,15 +2,13 @@ import React, { Component } from 'react'
 import {View, Text, TextInput, TouchableOpacity, Image, StyleSheet} from "react-native"
 import { auth, db } from '../firebase/config'
 import MyCamera from '../components/MyCamera'
-
-
-
 export default class NewPost extends Component {
     constructor(props){
         super(props)
         this.state = { //todo lo que voy a querer en mi posteo
+            userActivo:{},
             createdAt: Date.now(),
-            owner: auth.currentUser.email,
+            owner: auth.currentUser.displayName,
             description: "",
             likes: [],
             comments: [],
@@ -19,14 +17,31 @@ export default class NewPost extends Component {
         }
     }
 
+    componentDidMount() {
+        db.collection('users').onSnapshot(docs=>{
+            docs.forEach(doc=>{
+                if(auth.currentUser.email === doc.data().email){
+                    this.setState({
+                        userActivo: {
+                            id:doc.id, 
+                            data: doc.data(),
+                        }
+                    })
+
+                }
+            })
+        })
+    }
+
     guardarPost(){
         console.log("guardar post")
         db.collection("posts").add({
-            owner: auth.currentUser.email,
+            owner: auth.currentUser.displayName,
             description: this.state.description,
             createdAt: Date.now(),
             likes: [],
             comments: [],
+            ownerPic: this.state.userActivo.data.image,
             url: this.state.url
         })
         .then((res) =>{
@@ -49,15 +64,14 @@ export default class NewPost extends Component {
  //lo de onimageupload  es lo que yo necesito para mostrar la camara 
     render() {
     return (
-      <View style= {styles.container}>
+      <View style={styles.container}>
         {
             this.state.showCamera ? 
             <MyCamera style={styles.cameraBody}
                 onImageUpload = {url => this.onImageUpload(url) } 
             /> :
-
-            <View>
-                <Text style={styles.title}>Nuevo post</Text>
+            <>
+                <Image source={{ uri: this.state.url }} style={styles.image} />
                 <TextInput
                     style = {styles.field}
                     keyboardType= "default"
@@ -66,45 +80,61 @@ export default class NewPost extends Component {
                     multiline
                 />
                 <TouchableOpacity
-                style ={styles.buttonText}
-                onPress = {() => this.guardarPost()}>
-                    <Text style={styles.buttonText}>Guardar</Text>
+                    style={this.state.description == "" ? styles.btnDisabled : styles.btn}
+                    onPress = {() => this.guardarPost()}>
+                    <Text style={this.state.description == "" ? styles.btnText : null}>Guardar</Text>
                 </TouchableOpacity>
-            </View>
-
+            </>
         }
       </View>
     )
   }
 }
  
-
 const styles = StyleSheet.create({
-    cameraBody: {
-        height: "88%"
-    },
     container: {
-        paddingHorizontal: 10,
-        marginTop: 10,
-        height:"100%"
-    },
-    title: {
-        marginBottom:20
+      overflow: "hidden",
+      flex: 1,
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#aaa",
+      color: "#ff9f68",
     },
     field: {
-        borderColor: "#dcdcdc",
-        borderWidth:1,
-        borderRadius:2,
-        padding:3,
-        marginBottom:8
+      color: "white",
+      flex: 1,
+      width: "90%",
+      justifyContent: "center",
+      padding: 10,
+      marginTop: 15,
+      borderRadius: 15,
+      backgroundColor: "rgba(0, 0, 0, 0.247)",
     },
-    button:{
-        borderRadius:2,
-        padding: 3,
-        backgroundColor:"green"
+    btn: {
+      backgroundColor: "#ffb703",
+      textAlign: 'center',
+      padding: 7,
+      margin: 10,
+      borderRadius: 15,
+      width: '90%',
     },
-    buttonText:{
-        color: "#fff"
-    }
-})
+    btnDisabled: {
+      backgroundColor: "#e9c46a",
+      textAlign: 'center',
+      padding: 7,
+      margin: 10,
+      borderRadius: 15,
+      width: '90%',
+    },
+    btnText: {
+      color: 'gray',
+    },
+    image: {
+      marginTop: 15,
+      height: 300,
+      width: "90%",
+      borderRadius: 12,
+    },
+  });
 

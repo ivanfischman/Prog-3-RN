@@ -13,7 +13,8 @@ class Home extends Component {
     constructor(props){
         super(props);
         this.state={
-            posts:[]
+            posts:[],
+            users: []
         }
     }
     
@@ -41,7 +42,7 @@ class Home extends Component {
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <Text style={styles.text}>
-                            ¡Hola {auth.currentUser.email}!
+                            ¡Hola {auth.currentUser.displayName}!
                         </Text>
                     </View>
                     <FlatList 

@@ -29,79 +29,105 @@ class Login extends Component {
 
     render(){
         return(
-            <View> 
-                <View>
-				<Text>Ingresar</Text>
-				<View>
-					<TextInput style={styles.field} placeholder="email" keyboardType="email-address" onChangeText={(text) => this.setState({ email: text })} value={this.state.email} />
-					<TextInput style={styles.field} placeholder="password" keyboardType="default" secureTextEntry onChangeText={(text) => this.setState({ pass: text })} value={this.state.pass} />
+            <>
+            <View style={styles.header}>
+                    <Text style={styles.title}>
+                        ¡Bienvenido de vuelta!
+                    </Text>
+                </View>
+            <View style={styles.container}>
+					<TextInput 
+                        style={styles.field} 
+                        placeholder="email" 
+                        keyboardType="email-address" 
+                        onChangeText={(text) => this.setState({ email: text })} value={this.state.email} 
+                    />
+					<TextInput 
+                        style={styles.field} 
+                        placeholder="password" 
+                        keyboardType="default" 
+                        secureTextEntry 
+                        onChangeText={(text) => this.setState({ pass: text })} value={this.state.pass} 
+                    />
 					<TouchableOpacity
                         onPress={() => this.loginUser(this.state.email, this.state.pass)}
-                        disabled = {this.state.email == "" || this.state.pass == ""}>
-                        <Text>Loguearme</Text>
+                        style={this.state.email == "" || this.state.password == ""
+                        ? styles.btnDisabled
+                        : styles.btn
+                        }
+                        disabled={this.state.email == "" || this.state.password == ""
+                        ? true
+                        : false
+                      }>
+                        <Text style={this.state.email == "" || this.state.password == ""
+                            ? styles.btnText
+                            : null
+                        }>Ingresar</Text>
                     </TouchableOpacity>
-		  <TouchableOpacity 
-            onPress={() => this.props.navigation.navigate('Register')}>
-              <Text> No tengo cuenta </Text>           
-          </TouchableOpacity>
-				</View>
-		  	</View>
-          <Text> {this.state.errorMensaje} </Text>
+
+                    <TouchableOpacity 
+                        onPress={() => this.props.navigation.navigate('Register')}
+                        style={styles.btn}
+                    >
+                        <Text> No tengo cuenta </Text>           
+                    </TouchableOpacity>
+                <Text> {this.state.errorMensaje} </Text>
             </View>
-           
+            </>
         )
     }
 
 }
 
 const styles = StyleSheet.create({
-  container: {
-    overflow: "hidden",
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "#22223b",
-    color: "#ff9f68",
-    paddingTop: 20,
-  },
-  field: {
-    width: "80%",
-    backgroundColor: "#C9ADA7",
-    textAlign: 'center',
-    padding: 7,
-    marginTop: 5,
-    borderRadius: 15,
-  },
-  btn: {
-    backgroundColor: "#ffb703",
-    color: "black",
-    textAlign: 'center',
-    padding: 7,
-    marginTop: 15,
-    borderRadius: 15,
-    width: '80%',
-  },
-  btnDisabled: {
-    backgroundColor: "#e9c46a",
-    textAlign: 'center',
-    padding: 7,
-    marginTop: 15,
-    borderRadius: 15,
-    width: '80%',
-  },
-  btnText: {
-    color: 'gray',
-  },
-  header: {
-    backgroundColor: "#22233b",
-    width: '100%',
-    padding: 10,
-  },
-  title: {
-    color: "white",
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: '600',
-  },
-});
+    container: {
+        overflow: "hidden",
+        flex: 1,
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#aaa",
+        color: "#ff9f68",
+      },
+    field: {
+      width: "80%",
+      backgroundColor: "#C9ADA7",
+      textAlign: 'center',
+      padding: 7,
+      marginTop: 5,
+      borderRadius: 15,
+    },
+    btn: {
+      backgroundColor: "#ffb703",
+      color: "black",
+      textAlign: 'center',
+      padding: 7,
+      marginTop: 15,
+      borderRadius: 15,
+      width: '80%',
+    },
+    btnDisabled: {
+      backgroundColor: "#e9c46a",
+      textAlign: 'center',
+      padding: 7,
+      marginTop: 15,
+      borderRadius: 15,
+      width: '80%',
+    },
+    btnText: {
+      color: 'gray',
+    },
+    header: {
+      backgroundColor: "#22223b",
+      width: '100%',
+      padding: 10,
+    },
+    title: {
+      color: "white",
+      textAlign: 'center',
+      fontSize: 20,
+      fontWeight: '600',
+    },
+  });
+  
 export default Login;

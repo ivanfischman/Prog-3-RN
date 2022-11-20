@@ -10,6 +10,7 @@ class Post extends Component {
 		this.state = {
 			cantidadDeLikes: this.props.dataPost.data.likes.length,
 			myLike: false,
+            users: []
 		};
 	}
 
@@ -19,6 +20,21 @@ class Post extends Component {
 				myLike: true,
 			});
 		}
+
+        db.collection("users").onSnapshot(
+            users => {
+                let usersFromDb=[]
+                users.forEach((user) => {
+                    usersFromDb.push({
+                        id: user.id,
+                        data: user.data()
+                    })
+                    console.log(usersFromDb)
+                }) 
+                this.setState({
+                    users: usersFromDb
+                })
+            })
 	}
 
 	like() {
@@ -63,13 +79,14 @@ class Post extends Component {
 		return (
 			<View style={styles.container}>
                 <View style={styles.inline}>
+                    <Image source={{uri: this.props.dataPost.data.ownerPic}} style={styles.fotoPerfil}/> 
                     <Text style={styles.username}>
                         <Text style={styles.paddingLeft}>
                             {this.props.dataPost.data.owner}
                         </Text>
                     </Text>
                     {
-                        this.props.dataPost.data.owner == auth.currentUser.email ? (
+                        this.props.dataPost.data.owner == auth.currentUser.displayName ? (
                         <TouchableOpacity onPress={() => this.deletePost(this.props.dataPost.id)}>
                             <Ionicons name="trash" size="20px" color="red" style={styles.trash} />
                         </TouchableOpacity>
@@ -129,6 +146,11 @@ class Post extends Component {
 }
 
 const styles = StyleSheet.create({
+    fotoPerfil: {
+        height: "25px",
+        width: "25px",
+        borderRadius: 50
+    },
     image: {
       width: "100%",
       height: 200,

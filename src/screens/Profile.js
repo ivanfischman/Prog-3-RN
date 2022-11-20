@@ -57,7 +57,7 @@ export default class Profile extends Component {
             <View style={styles.header}>
               <View style={styles.inline}>
                 <Text style={styles.username}>
-                  {auth.currentUser.email}
+                  {auth.currentUser.displayName}
                 </Text>
                 <TouchableOpacity onPress={() => this.logOut()}>
                   <Ionicons

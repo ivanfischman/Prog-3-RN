@@ -16,7 +16,6 @@ function Menu() {
   return ( 
       <Tab.Navigator>
         <Tab.Screen 
-            options={{ headerShown : false }}
             name="Home" 
             options ={
                 { tabBarIcon: () =><Entypo name="home" size={24} color="black" />}
@@ -25,7 +24,6 @@ function Menu() {
         />
 
         <Tab.Screen
-            options={{ headerShown : false }}
             name="Profile" 
             options ={
                 { tabBarIcon: () =><AntDesign name="user" size={24} color="black" />}
@@ -34,20 +32,20 @@ function Menu() {
         />   
 
         <Tab.Screen
-            options={{ headerShown : false }}
             name="NewPost"
             options ={
                 { tabBarIcon: () =><Entypo name="camera" size={24} color="black" />}
             }
             component={NewPost}
-            /> 
+        /> 
 
-            <Tab.Screen 
+        <Tab.Screen 
             name="Buscador"
             options={
                 { tabBarIcon: () =><AntDesign name="search1" size={24} color="black" />}
             }
-            component= {Buscador}/>
+            component= {Buscador}
+        />
       </Tab.Navigator>
     
   );

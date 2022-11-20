@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { TouchableOpacity, View, StyleSheet,FlatList, TextInput, Image, Text } from 'react-native';
 import { db } from '../firebase/config';
+import { Ionicons } from '@expo/vector-icons';
 import SearchResults from './SearchResults'; 
 
 export default class Buscador extends Component {
@@ -11,80 +12,107 @@ export default class Buscador extends Component {
             resultado: [],
             users: "",
             error: "",
-            
-            
         }
-      
      }
-componentDidMount(){
-    db.collection("users").onSnapshot(
-        users => {
-            let usersFromDb=[]
-            users.forEach((user) => {
-                usersFromDb.push({
-                    id: user.id,
-                    data: user.data()
+
+    componentDidMount(){
+        db.collection("users").onSnapshot(
+            users => {
+                let usersFromDb=[]
+                users.forEach((user) => {
+                    usersFromDb.push({
+                        id: user.id,
+                        data: user.data()
+                    })
+                }) 
+                this.setState({
+                    users: usersFromDb
                 })
-            }) 
-            this.setState({
-                users: usersFromDb
             })
+        }
+    buscador(){
+        if(this.state.busqueda.length > 0){
             
-        })
-    }
-buscador(){
-    if(this.state.busqueda.length > 0){
+            let nuevoArray = this.state.users.filter((user) => {
+            return  user.data.nombreUsuario.includes(this.state.busqueda)}
+            )
+                this.setState({
+                    resultado: nuevoArray,
+                
+                }, () => console.log(this.state.resultado))
         
-        let nuevoArray = this.state.users.filter((user) => {
-          return  user.data.nombreUsuario.includes(this.state.busqueda)}
-        )
+                if(this.state.resultado.length== 0) {
+                this.setState({
+                error: "No existen coincidencias para este usuario"
+                })
+                }   
+        } else if(this.state.busqueda.length == 0) {
             this.setState({
-                resultado: nuevoArray,
-            
-            }, () => console.log(this.state.resultado))
-    
-            if(this.state.resultado.length== 0) {
-            this.setState({
-            error: "No existen coincidencias para este usuario"
+                error: "Este campo no puede estar vacío"
             })
-            }   
-    } else if(this.state.busqueda.length == 0) {
-        this.setState({
-            error: "Este campo no puede estar vacío"
-        })
-    } 
-      
-}
+        } 
+    }
 
 render() {
     return (
         <>
-        {this.state.resultado.length > 0 ?
-        <View>
-            <FlatList
-            data = {this.state.resultado}
-            keyExtractor= {item => item.id}
-            renderItem = { ({item}) => <SearchResults dataUser={item} 
-            {...this.props} />}>
-            </FlatList>
-        </View> : <Text>{this.state.error}</Text>
-        }
-          <View>
-            
-                <TextInput style={{}} placeholder="buscá a tus amigos"
+            <View style={styles.container2}>
+                <TextInput style={styles.field} placeholder="buscá a tus amigos"
                 onChangeText={(text) => this.setState({busqueda: text})}>
                 </TextInput>
                 <TouchableOpacity onPress = {() => this.buscador()}> 
-                    <Text>buscar</Text>
+                    <Ionicons name="search-sharp" size={24} color="black" />
                 </TouchableOpacity>
-                </View>
-      <View>
-        
-        
-
-        
-        
-      </View></>
+            </View>
+            {this.state.resultado.length > 0 ?
+            <View>
+                <FlatList
+                    style={styles.flatlist}
+                    data = {this.state.resultado}
+                    keyExtractor= {item => item.id}
+                    renderItem = { ({item}) => <SearchResults dataUser={item} 
+                    {...this.props} />}>
+                </FlatList>
+            </View> : <Text style={styles.textBlack}>{this.state.error}</Text>
+            }
+        </>
     )
   }
 }
+
+const styles = StyleSheet.create({
+    container2: {
+        display: 'flex',
+        flexDirection:'row',
+        justifyContent: 'space-around',
+        alignItems: "center",
+        marginHorizontal:6,
+    },
+    field: {
+      width: "90%",
+      backgroundColor: "#C9ADA7",
+      color: "black",
+      textAlign: "center",
+      padding: 7,
+      marginTop: 5,
+      borderRadius: 5,
+    },
+    flatlist: {
+      overflow: "hidden",
+      width: "100%",
+      flex: 9,
+      flexDirection: "column",
+    },
+    textBlack: {
+      color: "black",
+      textAlign: "center",
+      margin: 30,
+    },
+    text: {
+      color: "white",
+      textAlign: "center",
+      fontSize: 20,
+      fontWeight: "600",
+    },
+  });
+  
