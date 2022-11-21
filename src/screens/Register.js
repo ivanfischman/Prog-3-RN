@@ -64,7 +64,6 @@ class Register extends Component { //usamos un componente de clase por el estado
                     miniBio:'',
                     image:''
                 })
-            this.props.navigation.navigate('Login')
         })
         
 			.catch((error) => this.setState(

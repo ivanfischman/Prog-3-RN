@@ -1,5 +1,4 @@
 import React from 'react'
-import { FlatList } from 'react-native'
 import { Text, TouchableOpacity, Image, StyleSheet, View } from 'react-native'
 import { Component } from 'react';
 import Buscador from './Buscador';
@@ -15,12 +14,12 @@ class SearchResults extends Component{
             image: this.props.dataUser.data.image
         }
     }
-
+                            
     render(){
         return(
             <View style={styles.listadoUsers}> 
                 <Image source={{uri: this.state.image}} style={styles.fotoPerfil}/>
-                <TouchableOpacity onPress= {()=>this.props.navigation.navigate("UserProfile",{ owner: this.state.email})}>
+                <TouchableOpacity onPress= {()=>this.props.navigation.navigate("UserProfile",{ owner: this.state.nombreUsuario, bio:this.state.biografia})}>
                     <Text style={styles.userName}>{this.state.nombreUsuario}</Text>
                 </TouchableOpacity>
             </View>
