@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { db, auth } from '../firebase/config';
-import { FlatList, View, StyleSheet, Text } from 'react-native'
+import { FlatList, View, TouchableOpacity, Text, StyleSheet } from 'react-native'
 import Post from './Post';
 
 export default class UserProfile extends Component {
@@ -8,8 +8,11 @@ export default class UserProfile extends Component {
       super(props);
       this.state = {
         posts: [],
+        data: [],
+        
+        
       };
-      console.log(props)
+      console.log(this.state.dataUser)
     } 
   
     componentDidMount() {
@@ -35,6 +38,11 @@ export default class UserProfile extends Component {
     render() {
     return (
         <View>
+          <View>
+          <Text style={{}}>
+                 Hola {this.props.route.params.nombreUsuario}
+          </Text>
+          </View>
         {this.state.posts.length > 0 ?
             <FlatList
               data={this.state.posts}
@@ -52,7 +60,6 @@ export default class UserProfile extends Component {
     )
   }
 }
-
 
 const styles = StyleSheet.create({
     noFlatlist: {

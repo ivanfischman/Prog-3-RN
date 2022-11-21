@@ -16,8 +16,10 @@ export default class Profile extends Component {
     super(props);
     this.state = {
       posts: [],
-      userActivo: {}
+      userActivo: {},
+      data: []
     };
+    
   } 
 
   componentDidMount() {
@@ -57,7 +59,7 @@ export default class Profile extends Component {
     })
   } //Component
 
-  addPostRedirect() {
+  Redirect() {
     this.props.navigation.navigate("NewPost");
   }
 
@@ -75,6 +77,7 @@ export default class Profile extends Component {
                 <Text style={styles.username}>
                   {auth.currentUser.displayName}
                 </Text>
+            
                 <TouchableOpacity onPress={() => this.logOut()}>
                   <Ionicons
                     style={styles.icon}
@@ -84,6 +87,11 @@ export default class Profile extends Component {
                   />
                 </TouchableOpacity>
               </View>
+              <View>
+              <Text> Info: {this.state.data.biografia} </Text>
+              <Text> {this.state.posts.length} publicaciones</Text>
+              <Text>Email: {auth.currentUser.email}</Text>
+            </View>
             </View>
             {this.state.posts.length > 0 ? (
               <FlatList
@@ -100,7 +108,7 @@ export default class Profile extends Component {
                 </Text>
                 <TouchableOpacity
                   style={styles.btn}
-                  onPress={() => this.addPostRedirect()}
+                  onPress={() => this.Redirect()}
                 >
                   <Text>¡Creá tu primera publicación!</Text>
                 </TouchableOpacity>

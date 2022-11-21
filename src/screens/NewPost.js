@@ -13,7 +13,8 @@ export default class NewPost extends Component {
             likes: [],
             comments: [],
             showCamera: true, 
-            url: ""
+            url: "",
+            nombreUsuario: ""
         }
     }
 
@@ -44,6 +45,7 @@ export default class NewPost extends Component {
             fotoPerfil: this.state.userActivo.data.image,
             url: this.state.url
         })
+       
         .then((res) =>{
             console.log("posteo exitoso")
             this.setState({

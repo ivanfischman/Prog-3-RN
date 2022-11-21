@@ -12,7 +12,9 @@ class Post extends Component {
 			myLike: false,
             users: []
 		};
+		console.log(props)
 	}
+	
 
 	componentDidMount() {
 		if (this.props.dataPost.data.likes.includes(auth.currentUser.email)) {
@@ -69,7 +71,7 @@ class Post extends Component {
 			)
 			.catch((error) => console.log(error));
     }
-
+	
     deletePost(id) {
         db.collection("posts").doc(id).delete()
     }
