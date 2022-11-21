@@ -20,7 +20,7 @@ class SearchResults extends Component{
         return(
             <View style={styles.listadoUsers}> 
                 <Image source={{uri: this.state.image}} style={styles.fotoPerfil}/>
-                <TouchableOpacity onPress= {()=>this.props.navigation.navigate("UserProfile",{ owner: this.state.email})}>
+                <TouchableOpacity onPress= {()=>this.props.navigation.navigate("UserProfile",{ owner: this.state.nombreUsuario})}>
                     <Text style={styles.userName}>{this.state.nombreUsuario}</Text>
                 </TouchableOpacity>
             </View>

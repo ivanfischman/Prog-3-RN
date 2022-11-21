@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { db, auth } from '../firebase/config';
-import { FlatList, View, TouchableOpacity, Text } from 'react-native'
+import { FlatList, View, StyleSheet, Text } from 'react-native'
 import Post from './Post';
 
 export default class UserProfile extends Component {
@@ -41,10 +41,31 @@ export default class UserProfile extends Component {
               keyExtractor={(post) => post.id.toString()}
               renderItem = {({item}) => <Post dataPost={item} {...this.props} />}
             /> : 
-            <Text> No hay posteos!</Text>
+            <View style={styles.noFlatlist}>
+                <Text style={styles.textBlack}>
+                  Este usuario no tiene niguna publicación.
+                </Text>
+            </View>
            
         }
         </View>
     )
   }
 }
+
+
+const styles = StyleSheet.create({
+    noFlatlist: {
+      overflow: "hidden",
+      width: "100%",
+      flex: 9,
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    textBlack: {
+      color: "black",
+      textAlign: "center",
+      margin: 30,
+    }
+  });

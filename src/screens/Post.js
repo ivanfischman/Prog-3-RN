@@ -78,23 +78,30 @@ class Post extends Component {
         console.log(this.props.dataPost)
 		return (
 			<View style={styles.container}>
-                <View style={styles.inline}>
-                    <Image source={{uri: this.props.dataPost.data.ownerPic}} style={styles.fotoPerfil}/> 
-                    <Text style={styles.username}>
-                        <Text style={styles.paddingLeft}>
-                            {this.props.dataPost.data.owner}
-                        </Text>
-                    </Text>
                     {
                         this.props.dataPost.data.owner == auth.currentUser.displayName ? (
+                    <View style={styles.inline}>
+                        <Image source={{uri: this.props.dataPost.data.fotoPerfil}} style={styles.fotoPerfil}/> 
+                        <Text style={styles.username}>
+                            <Text style={styles.paddingLeft}>
+                                {this.props.dataPost.data.owner}
+                            </Text>
+                        </Text>
                         <TouchableOpacity onPress={() => this.deletePost(this.props.dataPost.id)}>
                             <Ionicons name="trash" size="20px" color="red" style={styles.trash} />
                         </TouchableOpacity>
-                        ) : (
-                            null 
-                        )
-                    }
-                </View>
+                    </View>
+                    ) : (
+                        <View style={styles.inline2}>
+                            <Image source={{uri: this.props.dataPost.data.fotoPerfil}} style={styles.fotoPerfil}/> 
+                            <Text style={styles.username}>
+                                <Text style={styles.paddingLeft}>
+                                    {this.props.dataPost.data.owner}
+                                </Text>
+                            </Text>
+                        </View>
+                    )
+                    } 
                 <Image
                     style={styles.image}
                     source={{ uri: this.props.dataPost.data.url }}
@@ -163,6 +170,13 @@ const styles = StyleSheet.create({
       justifyContent: "space-between",
       margin: 5,
     },
+    inline2: {
+      flexWrap: "wrap",
+      alignItems: "center",
+      flexDirection: "row",
+      justifyContent: "center",
+      margin: 5,
+    },
     inlineNear: {
       flexWrap: "wrap",
       alignItems: "center",
@@ -196,7 +210,7 @@ const styles = StyleSheet.create({
       marginLeft: 10,
     },
     username: {
-      textAlign: "left",
+      textAlign: "center",
       color: "white",
       fontWeight: "600",
       fontSize: 15,

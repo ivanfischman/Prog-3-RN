@@ -4,9 +4,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Modal,
   FlatList,
-  ActivityIndicator,
+  Image
 } from "react-native";
 import { auth, db } from "../firebase/config";
 import Post from "../screens/Post";
@@ -17,12 +16,13 @@ export default class Profile extends Component {
     super(props);
     this.state = {
       posts: [],
+      userActivo: {}
     };
   } 
 
   componentDidMount() {
     db.collection("posts")
-      .where("owner", "==", auth.currentUser.email)
+      .where("owner", "==", auth.currentUser.displayName)
       .orderBy("createdAt", "desc")
       .onSnapshot(
         (docs) => {
@@ -37,8 +37,24 @@ export default class Profile extends Component {
             posts: postsAux,
           });
           console.log(this.state.posts);
+          console.log("HOLA");
         } // docs
       ); //Snapshot
+
+      db.collection('users').onSnapshot(docs=>{
+        docs.forEach(doc=>{
+            if(auth.currentUser.email === doc.data().email){
+                this.setState({
+                    userActivo: {
+                        id:doc.id, 
+                        data: doc.data(),
+                    }
+                })
+                console.log("HOLA2")
+            console.log(this.state.userActivo)
+            }
+        })
+    })
   } //Component
 
   addPostRedirect() {
@@ -69,7 +85,6 @@ export default class Profile extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            {/* header */}
             {this.state.posts.length > 0 ? (
               <FlatList
                 showsHorizontalScrollIndicator={false}
@@ -98,6 +113,11 @@ export default class Profile extends Component {
 }
 
 const styles = StyleSheet.create({
+    fotoPerfil: {
+        height: "25px",
+        width: "25px",
+        borderRadius: 50
+    },
   container: {
     overflow: "hidden",
     flex: 1,
@@ -166,19 +186,5 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 15,
     padding: 5,
-  },
-  modal: {
-    border: "none",
-    width: "100%",
-    marginTop: 10,
-    flexDirection: "column",
-    justifyContent: "space-around",
-  },
-  boldText: {
-    fontSize: "30",
-    fontWeight: "bold",
-  },
-  paddingLeft: {
-    paddingLeft: "5px",
   },
 });
