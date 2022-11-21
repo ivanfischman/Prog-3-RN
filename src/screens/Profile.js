@@ -25,7 +25,7 @@ export default class Profile extends Component {
   componentDidMount() {
     db.collection("posts")
       .where("owner", "==", auth.currentUser.email)
-      // .orderBy("createdAt", "desc")
+      .orderBy("createdAt", "desc")
       .onSnapshot(
         (docs) => {
           let postsAux = [];
@@ -73,7 +73,7 @@ export default class Profile extends Component {
             <View style={styles.header}>
               <View style={styles.inline}>
                 <Text style={styles.username}>
-                  {this.state.data.nombreUsuario}
+                  {auth.currentUser.displayName}
                 </Text>
             
                 <TouchableOpacity onPress={() => this.logOut()}>
@@ -109,7 +109,7 @@ export default class Profile extends Component {
                   style={styles.btn}
                   onPress={() => this.Redirect()}
                 >
-                  <Text>¡Creá tu primer posteo!</Text>
+                  <Text>¡Creá tu primera publicación!</Text>
                 </TouchableOpacity>
               </View>
             )}

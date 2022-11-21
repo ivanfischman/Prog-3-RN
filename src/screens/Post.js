@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { auth, db } from '../firebase/config';
 import firebase from 'firebase';
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 class Post extends Component {
 	constructor(props) {
@@ -9,9 +10,7 @@ class Post extends Component {
 		this.state = {
 			cantidadDeLikes: this.props.dataPost.data.likes.length,
 			myLike: false,
-			email: this.props.dataPost.data.owner,
-			nombreUsuario: this.props.dataPost.data.nombreUsuario
-			
+            users: []
 		};
 		console.log(props)
 	}
@@ -23,6 +22,21 @@ class Post extends Component {
 				myLike: true,
 			});
 		}
+
+        db.collection("users").onSnapshot(
+            users => {
+                let usersFromDb=[]
+                users.forEach((user) => {
+                    usersFromDb.push({
+                        id: user.id,
+                        data: user.data()
+                    })
+                    console.log(usersFromDb)
+                }) 
+                this.setState({
+                    users: usersFromDb
+                })
+            })
 	}
 
 	like() {
@@ -65,55 +79,160 @@ class Post extends Component {
 	render() {
         console.log(this.props.dataPost)
 		return (
-			<View style={styles.separator}>
+			<View style={styles.container}>
+                <View style={styles.inline}>
+                    <Image source={{uri: this.props.dataPost.data.ownerPic}} style={styles.fotoPerfil}/> 
+                    <Text style={styles.username}>
+                        <Text style={styles.paddingLeft}>
+                            {this.props.dataPost.data.owner}
+                        </Text>
+                    </Text>
+                    {
+                        this.props.dataPost.data.owner == auth.currentUser.displayName ? (
+                        <TouchableOpacity onPress={() => this.deletePost(this.props.dataPost.id)}>
+                            <Ionicons name="trash" size="20px" color="red" style={styles.trash} />
+                        </TouchableOpacity>
+                        ) : (
+                            null 
+                        )
+                    }
+                </View>
                 <Image
                     style={styles.image}
                     source={{ uri: this.props.dataPost.data.url }}
                 />
-				<TouchableOpacity onPress = {()=>this.props.navigation.navigate("UserProfile",{ owner: this.state.email, nombreUsuario:this.props.dataPost.data.nombreUsuario})}>
-					<Text>{this.props.dataPost.data.owner}</Text>
-				</TouchableOpacity>
-				<Text>Texto del Post: {this.props.dataPost.data.description}</Text>
-				<Text>Cantidad de likes: {this.state.cantidadDeLikes}</Text>
-				{this.state.myLike ? (
-					<TouchableOpacity onPress={() => this.unLike()}>
-						<Text>Quitar Like</Text>
-					</TouchableOpacity>
-				) : (
-					<TouchableOpacity onPress={() => this.like()}>
-						<Text>Like</Text>
-					</TouchableOpacity>
-				)}
-                {
-                    this.props.dataPost.data.owner == auth.currentUser.email ? (
-                    <TouchableOpacity onPress={() => this.deletePost(this.props.dataPost.id)}>
-						<Text>Borrar</Text>
-					</TouchableOpacity>
-                    ) : (
-                        null 
-                    )
-                }
-
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("Comments", {id: this.props.dataPost.id})}> 
-                    <Text>Comments</Text>
-				</TouchableOpacity>
+                <View style={styles.inline}>
+                    <View style={styles.inlineNear}>
+                        <Text style={styles.posteoText}>{this.props.dataPost.data.owner}</Text>
+                            <Text style={styles.text}>
+                                {this.props.dataPost.data.description}
+                            </Text>
+                    </View>
+                    {!this.state.myLike ? (
+                        <TouchableOpacity onPress={() => this.like()}>
+                            <Ionicons
+                            style={styles.heartIcon}
+                            name="heart-outline"
+                            size="20px"
+                            color="white"
+                            />
+                        </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity onPress={() => this.unLike()}>
+                            <Ionicons
+                            style={styles.heartIcon}
+                            name="heart"
+                            size="20px"
+                            color="red"
+                            />
+                        </TouchableOpacity>
+                        )}
+                        <View style={styles.inlineNear}>
+                            <Text style={styles.text}>
+                                {this.props.dataPost.data.comments.length}
+                            </Text>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate("Comments", {id: this.props.dataPost.id})}> 
+                            <Ionicons
+                                    style={styles.heartIcon}
+                                    name="chatbubble-ellipses"
+                                    size="20px"
+                                    color="white"
+                                />
+                            </TouchableOpacity>
+                        </View>
+                </View>
+                <Text style={styles.likes}>Likes: {this.state.cantidadDeLikes}</Text>
 			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	separator: {
-		borderBottomColor: '#ddd',
-		borderBottomWidth: 1,
-		marginBottom: 10,
-		paddingHorizontal: 20,
-	},
+    fotoPerfil: {
+        height: "25px",
+        width: "25px",
+        borderRadius: 50
+    },
     image: {
-        width: "100%",
-        height: 200,
-        borderRadius: 12,
+      width: "100%",
+      height: 200,
+      borderRadius: 12,
+    },
+    inline: {
+      flexWrap: "wrap",
+      alignItems: "center",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      margin: 5,
+    },
+    inlineNear: {
+      flexWrap: "wrap",
+      alignItems: "center",
+      flexDirection: "row",
+      justifyContent: "flex-start",
+    },
+    container: {
+      flex: 1,
+      width: "90%",
+      justifyContent: "center",
+      padding: 10,
+      margin: "auto",
+      marginTop: 15,
+      borderRadius: 15,
+      shadowColor: "black",
+      shadowOffset: {
+        width: 0,
+        height: 2,
       },
-});
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
+      backgroundColor: "#4A4E69",
+    },
+    text: {
+      color: "white",
+      textAlign: "center",
+      padding: 5,
+    },
+    heartIcon: {
+      marginLeft: 10,
+    },
+    username: {
+      textAlign: "left",
+      color: "white",
+      fontWeight: "600",
+      fontSize: 15,
+      padding: 5,
+      paddingBottom: "12px"
+    },
+    modal: {
+      border: "none",
+      width: "100%",
+      marginTop: 10,
+    },
+    paddingLeft: {
+      paddingLeft: "5px",
+      color: "white",
+      paddingBottom: "12px"
+    },
+    trash: {
+        marginBottom: "12px"
+    },
+    posteoText: {
+        textAlign: "left",
+        color: "white",
+        fontWeight: "600",
+        fontSize: 15,
+        padding: 5,
+      },
+    likes: {
+    textAlign: "left",
+    color: "white",
+    fontWeight: "600",
+    fontSize: 15,
+    padding: 5,
+    paddingLeft: "9px"
+    },
+  }); //Styles
 
 export default Post;

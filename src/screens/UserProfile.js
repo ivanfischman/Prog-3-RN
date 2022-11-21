@@ -17,29 +17,24 @@ export default class UserProfile extends Component {
   
     componentDidMount() {
         db.collection("posts")
-          .where("owner", "==", this.props.route.params.owner) 
-          // .orderBy("createdAt", "desc")
+          .orderBy("createdAt", "desc")
+          .where("owner", "==", this.props.route.params.owner)
           .onSnapshot(
             (docs) => {
-              let userPosts = [];
+              let postsAux = [];
               docs.forEach((doc) => {
-                userPosts.push({
+                postsAux.push({
                   id: doc.id,
                   data: doc.data(),
                 });
               }); // For each
               this.setState({
-                posts: userPosts,
+                posts: postsAux,
               });
-              
             } // docs
           ); //Snapshot
-
-         
-              
-              
-             //Snapshot
-      } //Component
+    }
+    
     render() {
     return (
         <View>
