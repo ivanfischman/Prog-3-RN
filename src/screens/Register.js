@@ -91,10 +91,8 @@ class Register extends Component { //usamos un componente de clase por el estado
             quality: 1,
         })
         .then((res) => {
-
             if (!image.cancelled) {
                 this.setState({image: res.assets[0].uri})
-                
             }
         })
     }
