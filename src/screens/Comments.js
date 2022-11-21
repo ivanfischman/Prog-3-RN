@@ -39,7 +39,7 @@ export default class Comments extends Component {
         .update({
             /* Guardamos el comentario en el array comments */
             comments: firebase.firestore.FieldValue.arrayUnion({
-              owner: auth.currentUser.email,
+              owner: auth.currentUser.displayName,
               comentario: this.state.comentario,
             }),
           })
