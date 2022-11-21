@@ -66,6 +66,7 @@ class Register extends Component { //usamos un componente de clase por el estado
                 })
             this.props.navigation.navigate('Login')
         })
+        
 			.catch((error) => this.setState(
 				{errorMensaje: error.message}
 			))
@@ -130,7 +131,7 @@ render() {
                         <Text style={styles.perfil}>Elegí tu foto de perfil</Text>
                     </TouchableOpacity>
 				<TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Login')} style={styles.btn}> <Text>Ya tengo cuenta</Text></TouchableOpacity>
+          onPress={() => this.props.navigation.navigate('Login')} style={styles.btn}> <Text>Ya tengo cuenta</Text></TouchableOpacity>
 				<TouchableOpacity 
                     disabled = {this.state.email == "" || this.state.pass == "" || this.state.nombreUsuario == ""}
                     onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario, this.state.miniBio, this.state.image)}
