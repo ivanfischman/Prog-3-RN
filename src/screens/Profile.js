@@ -19,7 +19,7 @@ export default class Profile extends Component {
       userActivo: {},
       data: []
     };
-    
+    console.log(props)
   } 
 
   componentDidMount() {
@@ -38,7 +38,6 @@ export default class Profile extends Component {
           this.setState({
             posts: postsAux,
           });
-          console.log(this.state.posts);
           console.log("HOLA");
         } // docs
       ); //Snapshot
@@ -52,7 +51,7 @@ export default class Profile extends Component {
                         data: doc.data(),
                     }
                 })
-                console.log("HOLA2")
+            console.log("HOLA2")
             console.log(this.state.userActivo)
             }
         })
@@ -88,7 +87,7 @@ export default class Profile extends Component {
                 </TouchableOpacity>
               </View>
               <View>
-              <Text style={styles.info}> Biografía: {this.state.data.biografia} </Text>
+              <Text style={styles.info}> Biografía:  </Text>
               <Text style={styles.info}> {this.state.posts.length} publicaciones</Text>
               <Text style={styles.info}>Email: {auth.currentUser.email}</Text>
             </View>

@@ -45,6 +45,9 @@ export default class UserProfile extends Component {
           <Text style={styles.bio}>
                biografía: {this.props.route.params.bio}
           </Text>
+          <Text style={styles.bio}>
+               {this.state.posts.length} publicaciones
+          </Text>
           </View>
         {this.state.posts.length > 0 ?
             <FlatList
