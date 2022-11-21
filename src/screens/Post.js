@@ -9,8 +9,13 @@ class Post extends Component {
 		this.state = {
 			cantidadDeLikes: this.props.dataPost.data.likes.length,
 			myLike: false,
+			email: this.props.dataPost.data.owner,
+			nombreUsuario: this.props.dataPost.data.nombreUsuario
+			
 		};
+		console.log(props)
 	}
+	
 
 	componentDidMount() {
 		if (this.props.dataPost.data.likes.includes(auth.currentUser.email)) {
@@ -52,7 +57,7 @@ class Post extends Component {
 			)
 			.catch((error) => console.log(error));
     }
-
+	
     deletePost(id) {
         db.collection("posts").doc(id).delete()
     }
@@ -65,7 +70,9 @@ class Post extends Component {
                     style={styles.image}
                     source={{ uri: this.props.dataPost.data.url }}
                 />
-				<Text>Post de: {this.props.dataPost.data.owner}</Text>
+				<TouchableOpacity onPress = {()=>this.props.navigation.navigate("UserProfile",{ owner: this.state.email, nombreUsuario:this.props.dataPost.data.nombreUsuario})}>
+					<Text>{this.props.dataPost.data.owner}</Text>
+				</TouchableOpacity>
 				<Text>Texto del Post: {this.props.dataPost.data.description}</Text>
 				<Text>Cantidad de likes: {this.state.cantidadDeLikes}</Text>
 				{this.state.myLike ? (

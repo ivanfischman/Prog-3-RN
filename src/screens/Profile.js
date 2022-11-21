@@ -17,7 +17,9 @@ export default class Profile extends Component {
     super(props);
     this.state = {
       posts: [],
+      data: []
     };
+    
   } 
 
   componentDidMount() {
@@ -36,12 +38,26 @@ export default class Profile extends Component {
           this.setState({
             posts: postsAux,
           });
-          console.log(this.state.posts);
+         
         } // docs
       ); //Snapshot
-  } //Component
+  //Component
 
-  addPostRedirect() {
+  db.collection("users")
+  .where("email", "==", auth.currentUser.email)
+  .onSnapshot(
+    (docs) => {
+      docs.forEach((doc) => {
+        this.setState({
+          data: doc.data(),
+        })
+        });
+      console.log(this.state.data)
+    } // docs
+  ); //Snapshot
+} //Component
+
+  Redirect() {
     this.props.navigation.navigate("NewPost");
   }
 
@@ -57,8 +73,9 @@ export default class Profile extends Component {
             <View style={styles.header}>
               <View style={styles.inline}>
                 <Text style={styles.username}>
-                  {auth.currentUser.email}
+                  {this.state.data.nombreUsuario}
                 </Text>
+            
                 <TouchableOpacity onPress={() => this.logOut()}>
                   <Ionicons
                     style={styles.icon}
@@ -68,6 +85,11 @@ export default class Profile extends Component {
                   />
                 </TouchableOpacity>
               </View>
+              <View>
+              <Text> Info: {this.state.data.biografia} </Text>
+              <Text> {this.state.posts.length} publicaciones</Text>
+              <Text>Email: {auth.currentUser.email}</Text>
+            </View>
             </View>
             {/* header */}
             {this.state.posts.length > 0 ? (
@@ -85,7 +107,7 @@ export default class Profile extends Component {
                 </Text>
                 <TouchableOpacity
                   style={styles.btn}
-                  onPress={() => this.addPostRedirect()}
+                  onPress={() => this.Redirect()}
                 >
                   <Text>¡Creá tu primer posteo!</Text>
                 </TouchableOpacity>

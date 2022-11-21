@@ -23,7 +23,7 @@ class SearchResults extends Component{
        
 
             <> 
-            <TouchableOpacity onPress= {()=>this.props.navigation.navigate("UserProfile",{ owner: this.state.email})}>
+            <TouchableOpacity onPress= {()=>this.props.navigation.navigate("UserProfile",{ owner: this.state.email , nombreUsuario: this.state.nombreUsuario})}>
                 <Text> nombre de usuario: {this.state.nombreUsuario}</Text>
             </TouchableOpacity>
                 <Text>biografía: {this.state.biografia}</Text> 

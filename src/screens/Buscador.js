@@ -46,8 +46,8 @@ buscador(){
             if(this.state.resultado.length== 0) {
             this.setState({
             error: "No existen coincidencias para este usuario"
-            })
-            }   
+             })
+        }   
     } else if(this.state.busqueda.length == 0) {
         this.setState({
             error: "Este campo no puede estar vacío"

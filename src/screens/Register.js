@@ -33,8 +33,9 @@ class Register extends Component { //usamos un componente de clase por el estado
 					posteos: [],
                     biografia: miniBio,
 				})
-            this.props.navigation.navigate('Login')
+           
         })
+        
 			.catch((error) => this.setState(
 				{errorMensaje: error.message}
 			))
@@ -64,10 +65,12 @@ render() {
 				/>
 				<TextInput style={styles.field} placeholder="password" keyboardType="default"   secureTextEntry onChangeText={(text) => this.setState({ pass: text })} value={this.state.pass} />
 				<TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Login')} style={styles.btn}> <Text>Ya tengo cuenta</Text></TouchableOpacity>
+          onPress={() => this.props.navigation.navigate('Login')} style={styles.btn}> <Text>Ya tengo cuenta</Text></TouchableOpacity>
 				<TouchableOpacity 
                     disabled = {this.state.email == "" || this.state.pass == "" || this.state.nombreUsuario == ""}
-                    onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario, this.state.miniBio)}
+                    onPress={() => {
+                      this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario, this.state.miniBio)
+                      this.props.navigation.navigate('Login')}}
                     style={
                         this.state.email == "" ||
                         this.state.pass == "" ||

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { db, auth } from '../firebase/config';
-import { FlatList, View, TouchableOpacity, Text } from 'react-native'
+import { FlatList, View, TouchableOpacity, Text, StyleSheet } from 'react-native'
 import Post from './Post';
 
 export default class UserProfile extends Component {
@@ -8,13 +8,16 @@ export default class UserProfile extends Component {
       super(props);
       this.state = {
         posts: [],
+        data: [],
+        
+        
       };
-      console.log(props)
+      console.log(this.state.dataUser)
     } 
   
     componentDidMount() {
         db.collection("posts")
-          .where("owner", "==", this.props.route.params.owner) //no se como hacer esto para coincidir 
+          .where("owner", "==", this.props.route.params.owner) 
           // .orderBy("createdAt", "desc")
           .onSnapshot(
             (docs) => {
@@ -28,13 +31,23 @@ export default class UserProfile extends Component {
               this.setState({
                 posts: userPosts,
               });
-              console.log(this.state.posts);
+              
             } // docs
           ); //Snapshot
+
+         
+              
+              
+             //Snapshot
       } //Component
     render() {
     return (
         <View>
+          <View>
+          <Text style={{}}>
+                 Hola {this.props.route.params.nombreUsuario}
+          </Text>
+          </View>
         {this.state.posts.length > 0 ?
             <FlatList
               data={this.state.posts}
@@ -48,3 +61,12 @@ export default class UserProfile extends Component {
     )
   }
 }
+const styles = StyleSheet.create({
+  container: {
+username: {
+  textAlign: "left",
+  color: "white",
+  fontWeight: "600",
+  fontSize: 15,
+  padding: 5,
+}}})

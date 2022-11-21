@@ -15,7 +15,8 @@ export default class NewPost extends Component {
             likes: [],
             comments: [],
             showCamera: true, 
-            url: ""
+            url: "",
+            nombreUsuario: ""
         }
     }
 
@@ -27,8 +28,10 @@ export default class NewPost extends Component {
             createdAt: Date.now(),
             likes: [],
             comments: [],
-            url: this.state.url
+            url: this.state.url,
+            
         })
+       
         .then((res) =>{
             console.log("posteo exitoso")
             this.setState({
