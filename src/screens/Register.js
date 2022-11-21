@@ -20,7 +20,7 @@ class Register extends Component { //usamos un componente de clase por el estado
 	componentDidMount(){ //como corre despues del primer renderizado, primero me carga el render 
 		auth.onAuthStateChanged((user) => {
 			if (user){
-				this.props.navigation.navigate("Login")
+				this.props.navigation.navigate("Menu")
 			}}) //veo cual ususario tengo logueado y toda su info 
 	}
 //al registrar un usuario lo queremos guardar en db con nombre, biografia, etc
@@ -64,7 +64,6 @@ class Register extends Component { //usamos un componente de clase por el estado
                     miniBio:'',
                     image:''
                 })
-            this.props.navigation.navigate('Login')
         })
         
 			.catch((error) => this.setState(

@@ -37,15 +37,19 @@ export default class UserProfile extends Component {
     
     render() {
     return (
-        <View>
-          <View>
-          <Text style={{}}>
-                 Hola {this.props.route.params.nombreUsuario}
+        <View style={styles.container}>
+          <View style={styles.header}>
+          <Text style={styles.text}>
+                {this.props.route.params.owner}
+          </Text>
+          <Text style={styles.bio}>
+               biografía: {this.props.route.params.bio}
           </Text>
           </View>
         {this.state.posts.length > 0 ?
             <FlatList
               data={this.state.posts}
+              style={styles.flatlist}
               keyExtractor={(post) => post.id.toString()}
               renderItem = {({item}) => <Post dataPost={item} {...this.props} />}
             /> : 
@@ -62,7 +66,46 @@ export default class UserProfile extends Component {
 }
 
 const styles = StyleSheet.create({
-    noFlatlist: {
+  
+text: {
+  textAlign: "center",
+  color: "white",
+  fontWeight: "800",
+  fontSize: 15,
+  padding: 5,
+},
+flatlist: {
+  overflow: "hidden",
+  width: "100%",
+  flex: 9,
+  flexDirection: 'column',
+},
+header: {
+  backgroundColor: "#22223b",
+  width: '100%',
+  padding: 10,
+  alignContent: "center"
+},
+container: {
+  overflow: "hidden",
+  flex: 1,
+  width: "90%",
+  justifyContent: "center",
+  padding: 10,
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: "#f2e9e4",
+  color: "#ff9f68",
+},
+bio: {
+  textAlign: "center",
+  color: "white",
+  fontWeight: "600",
+  fontSize: 15,
+  padding: 5,
+},
+noFlatlist: {
       overflow: "hidden",
       width: "100%",
       flex: 9,
@@ -70,7 +113,7 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       alignItems: "center",
     },
-    textBlack: {
+textBlack: {
       color: "black",
       textAlign: "center",
       margin: 30,

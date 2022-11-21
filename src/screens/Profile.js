@@ -74,7 +74,7 @@ export default class Profile extends Component {
           <View style={styles.container}>
             <View style={styles.header}>
               <View style={styles.inline}>
-                <Text style={styles.username}>
+                <Text style={styles.text}>
                   {auth.currentUser.displayName}
                 </Text>
             
@@ -88,9 +88,9 @@ export default class Profile extends Component {
                 </TouchableOpacity>
               </View>
               <View>
-              <Text> Info: {this.state.data.biografia} </Text>
-              <Text> {this.state.posts.length} publicaciones</Text>
-              <Text>Email: {auth.currentUser.email}</Text>
+              <Text style={styles.info}> Biografía: {this.state.data.biografia} </Text>
+              <Text style={styles.info}> {this.state.posts.length} publicaciones</Text>
+              <Text style={styles.info}>Email: {auth.currentUser.email}</Text>
             </View>
             </View>
             {this.state.posts.length > 0 ? (
@@ -135,6 +135,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#aaa",
     color: "#ff9f68",
   },
+  info:{
+    textAlign: "center",
+    color: "white",
+    fontWeight: "600",
+    fontSize: 15,
+    padding: 5,
+  },
   header: {
     backgroundColor: "#22223b",
     boxSizing: "border-box",
@@ -144,6 +151,7 @@ const styles = StyleSheet.create({
     zIndex: 0,
     flexDirection: "column",
     justifyContent: "space-around",
+    alignItems: "center"
   },
   inline: {
     flexWrap: "wrap",
@@ -179,9 +187,11 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   text: {
-    color: "white",
-    textAlign: "center",
-    margin: 5,
+      textAlign: "center",
+      color: "white",
+      fontWeight: "800",
+      fontSize: 15,
+      padding: 5,
   },
   textBlack: {
     color: "black",
