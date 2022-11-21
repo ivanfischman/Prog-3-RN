@@ -17,7 +17,9 @@ export default class Profile extends Component {
     this.state = {
       posts: [],
       userActivo: {},
-      data: []
+      data: [],
+      biografia: "",
+      imagen: ""
     };
     
   } 
@@ -52,8 +54,12 @@ export default class Profile extends Component {
                         data: doc.data(),
                     }
                 })
-                console.log("HOLA2")
-            console.log(this.state.userActivo)
+            console.log("HOLA2")
+            
+            this.setState({
+                biografia: this.state.userActivo.data.biografia,
+                imagen: this.state.userActivo.data.image
+            })
             }
         })
     })
@@ -69,11 +75,13 @@ export default class Profile extends Component {
   }
 
   render() {
+    console.log(this.state.userActivo)
     return (
       <>
           <View style={styles.container}>
             <View style={styles.header}>
               <View style={styles.inline}>
+              <Image source={{uri: this.state.imagen}} style={styles.fotoPerfil}/> 
                 <Text style={styles.text}>
                   {auth.currentUser.displayName}
                 </Text>
@@ -87,11 +95,11 @@ export default class Profile extends Component {
                   />
                 </TouchableOpacity>
               </View>
+            </View>
               <View>
-              <Text style={styles.info}> Biografía: {this.state.data.biografia} </Text>
+              <Text style={styles.info}> Biografía: {this.state.biografia} </Text>
               <Text style={styles.info}> {this.state.posts.length} publicaciones</Text>
               <Text style={styles.info}>Email: {auth.currentUser.email}</Text>
-            </View>
             </View>
             {this.state.posts.length > 0 ? (
               <FlatList
@@ -122,8 +130,8 @@ export default class Profile extends Component {
 
 const styles = StyleSheet.create({
     fotoPerfil: {
-        height: "25px",
-        width: "25px",
+        height: "30px",
+        width: "30px",
         borderRadius: 50
     },
   container: {
@@ -151,7 +159,6 @@ const styles = StyleSheet.create({
     zIndex: 0,
     flexDirection: "column",
     justifyContent: "space-around",
-    alignItems: "center"
   },
   inline: {
     flexWrap: "wrap",
