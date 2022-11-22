@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#aaa",
+    backgroundColor: "#CFB997",
     color: "#ff9f68",
   },
   info:{
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   header: {
-    backgroundColor: "#22223b",
+    backgroundColor: "#61764B",
     boxSizing: "border-box",
     width: "100%",
     padding: 10,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   btn: {
-    backgroundColor: "#ffb703",
+    backgroundColor: "#9BA17B",
     color: "black",
     textAlign: "center",
     padding: 7,

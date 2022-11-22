@@ -10,7 +10,7 @@ export default class UserProfile extends Component {
         posts: [],
         data: [],
       };
-      console.log(this.state.dataUser)
+      
     } 
   
     componentDidMount() {
@@ -19,15 +19,15 @@ export default class UserProfile extends Component {
           .where("owner", "==", this.props.route.params.owner)
           .onSnapshot(
             (docs) => {
-              let postsAux = [];
+              let posts = [];
               docs.forEach((doc) => {
-                postsAux.push({
+                posts.push({
                   id: doc.id,
                   data: doc.data(),
                 });
               }); // For each
               this.setState({
-                posts: postsAux,
+                posts: posts,
               });
             } // docs
           ); //Snapshot
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     },
     header: {
-    backgroundColor: "#22223b",
+    backgroundColor: "#61764B",
     width: '100%',
     padding: 10,
     alignContent: "center"
