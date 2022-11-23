@@ -118,7 +118,7 @@ export default class MyCamera extends Component {
       padding: 10,
       width: '100%',
       justifyContent: 'space-around',
-      backgroundColor: '#001219',
+      backgroundColor: "#273B33"
     },
     field: {
       width: "80%",

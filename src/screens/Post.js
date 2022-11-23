@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.5,
       shadowRadius: 3.84,
       elevation: 5,
-      backgroundColor: "#4A4E69",
+      backgroundColor: "#395144",
     },
     text: {
       color: "white",

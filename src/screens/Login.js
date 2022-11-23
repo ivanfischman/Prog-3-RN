@@ -86,12 +86,12 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#aaa",
+        backgroundColor: "#CFB997",
         color: "#ff9f68",
       },
     field: {
       width: "80%",
-      backgroundColor: "#C9ADA7",
+      backgroundColor: "#9BA17B",
       textAlign: 'center',
       padding: 7,
       marginTop: 5,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
       color: 'gray',
     },
     header: {
-      backgroundColor: "#22223b",
+      backgroundColor: "#61764B",
       width: '100%',
       padding: 10,
     },
