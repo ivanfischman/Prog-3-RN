@@ -25,12 +25,12 @@ export default class UserProfile extends Component {
                   id: doc.id,
                   data: doc.data(),
                 });
-              }); // For each
+              }); 
               this.setState({
                 posts: posts,
               });
-            } // docs
-          ); //Snapshot
+            } 
+          ); 
     }
     
     render() {
