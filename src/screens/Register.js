@@ -65,7 +65,6 @@ class Register extends Component { //usamos un componente de clase por el estado
                     image:''
                 })
         })
-        
 			.catch((error) => this.setState(
 				{errorMensaje: error.message}
 			))

@@ -69,6 +69,10 @@ export default class Profile extends Component {
     this.props.navigation.navigate("NewPost");
   }
 
+  RedirectProfile() {
+    this.props.navigation.navigate("EditProfile", {userActivo: this.state.userActivo});
+  }
+
   logOut(){
     auth.signOut();
     this.props.navigation.navigate("Register")
@@ -100,6 +104,12 @@ export default class Profile extends Component {
               <Text style={styles.info}> Biografía: {this.state.biografia} </Text>
               <Text style={styles.info}> {this.state.posts.length} publicaciones</Text>
               <Text style={styles.info}>Email: {auth.currentUser.email}</Text>
+              <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => this.RedirectProfile()}
+                >
+                  <Text>Editar perfil</Text>
+                </TouchableOpacity>
             </View>
             {this.state.posts.length > 0 ? (
               <FlatList
