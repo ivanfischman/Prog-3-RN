@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
       width: "100%",
       flex: 9,
       flexDirection: "column",
-      backgroundColor: "#CFB997"
     },
     textBlack: {
       color: "black",

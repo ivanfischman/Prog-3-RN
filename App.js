@@ -23,11 +23,7 @@ export default function App() {
 
 				<Stack.Screen options={{ headerShown: false }} name="Menu" component={Menu} />
 
-                <Stack.Screen
-                    options={{ headerShown : true }}
-                    name="Comments"
-                    component={Comments}
-                /> 
+                <Stack.Screen options={{ headerShown : true }} name="Comments" component={Comments}/> 
 
 				<Stack.Screen
 					options={{ headerShown : true }}
