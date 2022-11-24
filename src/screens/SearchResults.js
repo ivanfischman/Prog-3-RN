@@ -1,16 +1,13 @@
 import React from 'react'
 import { Text, TouchableOpacity, Image, StyleSheet, View } from 'react-native'
 import { Component } from 'react';
-import Buscador from './Buscador';
+
 class SearchResults extends Component{ 
     constructor(props){
         super(props);
-        console.log(props)
         this.state = {
             nombreUsuario: this.props.dataUser.data.nombreUsuario,
             biografia: this.props.dataUser.data.biografia,
-            id: this.props.dataUser.id,
-            email:this.props.dataUser.data.email,
             image: this.props.dataUser.data.image
         }
     }

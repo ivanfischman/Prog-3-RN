@@ -65,7 +65,6 @@ class Register extends Component { //usamos un componente de clase por el estado
                     image:''
                 })
         })
-        
 			.catch((error) => this.setState(
 				{errorMensaje: error.message}
 			))
@@ -127,8 +126,7 @@ render() {
                     >
                         <Text style={styles.perfil}>Elegí tu foto de perfil</Text>
                     </TouchableOpacity>
-				<TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Login')} style={styles.btn}> <Text>Ya tengo cuenta</Text></TouchableOpacity>
+				
 				<TouchableOpacity 
                     disabled = {this.state.email == "" || this.state.pass == "" || this.state.nombreUsuario == ""}
                     onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario, this.state.miniBio, this.state.image)}
@@ -139,8 +137,8 @@ render() {
                         this.state.miniBio == ""
                           ? styles.btnDisabled
                           : styles.btn
-                      }
-                >
+                      }>
+                    
 				<Text style={
                     this.state.email == "" ||
                     this.state.pass == "" ||
@@ -153,6 +151,10 @@ render() {
                     Registrarme
                 </Text>
 				</TouchableOpacity>
+                
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style={styles.btn}>
+                         <Text>Ya tengo cuenta</Text>
+                </TouchableOpacity>
 			
             <Text> {this.state.errorMensaje} </Text>
 		</View>
@@ -168,12 +170,12 @@ const styles = StyleSheet.create({
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "#aaa",
+      backgroundColor: "#CFB997",
       color: "#ff9f68",
     },
     field: {
       width: "80%",
-      backgroundColor: "#C9ADA7",
+      backgroundColor: "#9BA17B",
       textAlign: "center",
       padding: 7,
       marginTop: 5,
@@ -200,7 +202,7 @@ const styles = StyleSheet.create({
       color: "gray",
     },
     header: {
-      backgroundColor: "#22223b",
+      backgroundColor: "#61764B",
       width: "100%",
       padding: 10,
     },

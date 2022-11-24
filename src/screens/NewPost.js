@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "#aaa",
+      backgroundColor: "#CFB997",
       color: "#ff9f68",
     },
     field: {
-      color: "white",
+      color: "#9BA17B",
       flex: 1,
       width: "90%",
       justifyContent: "center",

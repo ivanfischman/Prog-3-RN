@@ -21,7 +21,7 @@ export default class Profile extends Component {
       biografia: "",
       imagen: ""
     };
-    
+    console.log(props)
   } 
 
   componentDidMount() {
@@ -40,7 +40,6 @@ export default class Profile extends Component {
           this.setState({
             posts: postsAux,
           });
-          console.log(this.state.posts);
           console.log("HOLA");
         } // docs
       ); //Snapshot
@@ -67,6 +66,10 @@ export default class Profile extends Component {
 
   Redirect() {
     this.props.navigation.navigate("NewPost");
+  }
+
+  RedirectProfile() {
+    this.props.navigation.navigate("EditProfile", {userActivo: this.state.userActivo});
   }
 
   logOut(){
@@ -100,6 +103,12 @@ export default class Profile extends Component {
               <Text style={styles.info}> Biografía: {this.state.biografia} </Text>
               <Text style={styles.info}> {this.state.posts.length} publicaciones</Text>
               <Text style={styles.info}>Email: {auth.currentUser.email}</Text>
+              <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => this.RedirectProfile()}
+                >
+                  <Text>Editar perfil</Text>
+                </TouchableOpacity>
             </View>
             {this.state.posts.length > 0 ? (
               <FlatList
@@ -140,7 +149,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#aaa",
+    backgroundColor: "#CFB997",
     color: "#ff9f68",
   },
   info:{
@@ -151,7 +160,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   header: {
-    backgroundColor: "#22223b",
+    backgroundColor: "#61764B",
     boxSizing: "border-box",
     width: "100%",
     padding: 10,
@@ -185,7 +194,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   btn: {
-    backgroundColor: "#ffb703",
+    backgroundColor: "#9BA17B",
     color: "black",
     textAlign: "center",
     padding: 7,

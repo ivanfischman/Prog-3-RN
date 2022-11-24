@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
       },
     header: {
-        backgroundColor: "#22223b",
+        backgroundColor: "#61764B",
         width: '100%',
         padding: 10,
       },
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       padding: 10,
       borderRadius: 15,
-      backgroundColor: "rgba(0, 0, 0, 0.247)",
+      backgroundColor: "#CFB997"
     },
     comment: {
       maxWidth: 170,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
     },
     btn: {
-      backgroundColor: "#ffb703",
+      backgroundColor: "#9BA17B",
       color: "black",
       textAlign: "center",
       padding: 7,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
       borderRadius: 15,
     },
     btnDisabled: {
-      backgroundColor: "#e9c46a",
+      backgroundColor: "#9BA17B",
       textAlign: "center",
       padding: 7,
       marginTop: 5,

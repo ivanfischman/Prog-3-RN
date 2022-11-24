@@ -55,7 +55,7 @@ export default class Buscador extends Component {
 
 render() {
     return (
-        <>
+        <View style= {styles.general}>
             <View style={styles.container2}>
                 <TextInput style={styles.field} placeholder="buscá a tus amigos"
                 onChangeText={(text) => this.setState({busqueda: text})}>
@@ -65,7 +65,7 @@ render() {
                 </TouchableOpacity>
             </View>
             {this.state.resultado.length > 0 ?
-            <View>
+            <View style= {styles.general}>
                 <FlatList
                     style={styles.flatlist}
                     data = {this.state.resultado}
@@ -75,22 +75,27 @@ render() {
                 </FlatList>
             </View> : <Text style={styles.textBlack}>{this.state.error}</Text>
             }
-        </>
+        </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+    general:{
+        backgroundColor: "#CFB997"
+    },
     container2: {
         display: 'flex',
         flexDirection:'row',
         justifyContent: 'space-around',
         alignItems: "center",
         marginHorizontal:6,
+        backgroundColor: "#CFB997"
+       
     },
     field: {
       width: "90%",
-      backgroundColor: "#C9ADA7",
+      backgroundColor: "#9BA17B",
       color: "black",
       textAlign: "center",
       padding: 7,
@@ -102,11 +107,13 @@ const styles = StyleSheet.create({
       width: "100%",
       flex: 9,
       flexDirection: "column",
+      backgroundColor: "#CFB997"
     },
     textBlack: {
       color: "black",
       textAlign: "center",
       margin: 30,
+     
     },
     text: {
       color: "white",
