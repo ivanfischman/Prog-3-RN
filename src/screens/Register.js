@@ -13,7 +13,7 @@ class Register extends Component { //usamos un componente de clase por el estado
             miniBio:"",
             boton: true,
             image: '',
-            permission: false
+            permission: true
 		};
 	}
 	//NO CERRAR SESION - lo hacemos en register pq es lo primero que ve el usuario
