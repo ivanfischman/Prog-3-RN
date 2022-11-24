@@ -22,12 +22,10 @@ export default class Comments extends Component {
         db.collection("posts")
             .doc(this.props.route.params.id)
             .onSnapshot(doc => {
-                
                 this.setState({
                     /* en doc.data().comments esta el array de comentarios de firebase */
                     comment: doc.data().comments
-                })
-
+                }) 
                 console.log(this.state.comment)
                 console.log(doc.data().comments)
             })

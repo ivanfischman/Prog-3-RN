@@ -82,7 +82,7 @@ render() {
 
 const styles = StyleSheet.create({
     general:{
-        backgroundColor: "#CFB997"
+        backgroundColor: "#CFB997",
     },
     container2: {
         display: 'flex',
@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
       color: "black",
       textAlign: "center",
       margin: 30,
-     
     },
     text: {
       color: "white",

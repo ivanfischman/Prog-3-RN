@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
       color: "#ff9f68",
     },
     field: {
-      color: "#9BA17B",
+      color: "black",
       flex: 1,
       width: "90%",
       justifyContent: "center",
